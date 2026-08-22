@@ -14,6 +14,7 @@ class BankReference {
         return bankCode + remaining;
     }
 
+    
     static String validateAndFormat(String reference) {
 
         if (reference.length() != 14) {
