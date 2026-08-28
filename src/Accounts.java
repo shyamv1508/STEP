@@ -1,5 +1,3 @@
-
-
 public class Accounts{
     int accountNumber,age ;
     double balance;
