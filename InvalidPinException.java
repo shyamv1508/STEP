@@ -1,5 +1,5 @@
-public class InvalidPinException {
-    public InvalidPinException(String message){
+public InvalidPinException extends AccountException {
+public InvalidPinException(String message) {
         super(message);
     }
 }

@@ -1,5 +1,5 @@
-public class AccountException {
-    public AccountException(String message){
+public AccountException extends Exception {
+public AccountException(String message) {
         super(message);
     }
 }

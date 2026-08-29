@@ -1,5 +1,5 @@
-public class InactiveAccountException {
-    public InactiveAccountException(String message){
+public InactiveAccountException extends AccountException {
+public InactiveAccountException(String message) {
         super(message);
     }
 }
