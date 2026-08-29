@@ -127,41 +127,63 @@ public class TestAccountEnhanced {
             p = "YES";
         }
 
-        System.out.println("Account#"+this.accountNumber+"|"+this.name+"("+this.age+")|"+this.accountType+"|₹"+this.balance+"|"+this.status+"|pin: "+ p+"\n");
+        System.out.println("Account#"+this.accountNumber+"|"+this.name+"("+this.age+")|"+this.accountType+"|₹"+this.balance+"|"+this.status+"|pin: "+ p);
     }
 
     public static void main(String[] args) {
         System.out.println("============================================================\n" +
                 "ENHANCED ACCOUNT TEST (BOOLEAN RETURNS)\n" +
                 "============================================================");
-        System.out.println(">>> Test 1: Valid Account Creation");
+        System.out.println("\n>>> Test 1: Valid Account Creation");
         TestAccountEnhanced a1 = new TestAccountEnhanced(1001,"John Doe", 25, 1000, "Savings");
         a1.disp();
 
-        System.out.println(">>> Test 2: Invalid Age (under 18)");
+        System.out.println("\n>>> Test 2: Invalid Age (under 18)");
         TestAccountEnhanced a2 = new TestAccountEnhanced(1002,"Young kid", 16,500,  "Savings");
         a2.disp();
 
-        System.out.println(">>> Test 3: Invalid Account Type");
+        System.out.println("\n>>> Test 3: Invalid Account Type");
         TestAccountEnhanced a3 = new TestAccountEnhanced(1003,"Test User",25,500,"invalid");
         a3.disp();
 
-        System.out.println(">>> Test 4: Minimum Balance Enforcement on Creation");
+        System.out.println("\n>>> Test 4: Minimum Balance Enforcement on Creation");
         TestAccountEnhanced a4 = new TestAccountEnhanced(1004,"Bob Wilson",25,300,"Savings");
         a4.disp();
 
-        System.out.println(">>> Test 5: Withdrawal with Minimum Balance");
+        System.out.println("\n>>> Test 5: Withdrawal with Minimum Balance");
         TestAccountEnhanced a5 = new TestAccountEnhanced(1005,"Alice Brown",30,1000,"Current");
         a5.disp();
         a5.setPin(1234);
-        System.out.println(a5.withdraw(200,1234));
+        System.out.print(a5.withdraw(200,1234));
         a5.disp();
 
-        System.out.println(">>> Test 6: Account Status Management");
+        System.out.println("\n>>> Test 6: Account Status Management");
         TestAccountEnhanced a6 = new TestAccountEnhanced(1006,"Charlie Green",35,2000,"Savings");
         a6.disp();
         System.out.println(a6.closeAccount());
         a6.disp();
+        System.out.print(a6.deposit(500));
+        a6.reopenAccount();
+        a6.disp();
+
+        System.out.println("\n>>> Test 7: PIN Protection");
+        TestAccountEnhanced a7 = new TestAccountEnhanced(1007,"Dania Prince",28,1500,"Savings");
+        a7.setPin(1234);
+        System.out.println(a7.withdraw(200,1234));
+        System.out.println(a7.withdraw(300,9999));
+
+
+
+
+        System.out.println("\n>>> Test 8: All Accounts Summary");
+        a1.disp();
+        a2.disp();
+        a3.disp();
+        a4.disp();
+        a5.disp();
+        a6.disp();
+        a7.disp();
+
 
     }
 
