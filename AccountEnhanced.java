@@ -8,7 +8,7 @@ public class AccountEnhanced {
         if(age < 18){
             age = 18;
         }
-        if(accountType != "Savings" || accountType != "Current"){
+        if(accountType != "Savings" && accountType != "Current"){
             accountType = "Savings";
         }
 

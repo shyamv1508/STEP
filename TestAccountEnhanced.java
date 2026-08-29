@@ -9,7 +9,7 @@ public class TestAccountEnhanced {
         if(age < 18){
             age = 18;
         }
-        if(accountType != "Savings" || accountType != "Current"){
+        if(accountType != "Savings" && accountType != "Current"){
             accountType = "Savings";
         }
 
@@ -116,13 +116,18 @@ public class TestAccountEnhanced {
     }
 
     boolean hasPin(){
-        if(this.pin > 0){
+        if(this.pin != null){
             return true;
         }
         return false;
     }
     void disp(){
-        System.out.println("Account#"+this.accountNumber+"|"+this.name+"("+this.age+")|"+this.accountType+"|₹"+this.balance+"|"+this.status+"|"+this.pin+"\n");
+        String p= "NO";
+        if (hasPin()){
+            p = "YES";
+        }
+
+        System.out.println("Account#"+this.accountNumber+"|"+this.name+"("+this.age+")|"+this.accountType+"|₹"+this.balance+"|"+this.status+"|pin: "+ p+"\n");
     }
 
     public static void main(String[] args) {
@@ -138,6 +143,25 @@ public class TestAccountEnhanced {
         a2.disp();
 
         System.out.println(">>> Test 3: Invalid Account Type");
+        TestAccountEnhanced a3 = new TestAccountEnhanced(1003,"Test User",25,500,"invalid");
+        a3.disp();
+
+        System.out.println(">>> Test 4: Minimum Balance Enforcement on Creation");
+        TestAccountEnhanced a4 = new TestAccountEnhanced(1004,"Bob Wilson",25,300,"Savings");
+        a4.disp();
+
+        System.out.println(">>> Test 5: Withdrawal with Minimum Balance");
+        TestAccountEnhanced a5 = new TestAccountEnhanced(1005,"Alice Brown",30,1000,"Current");
+        a5.disp();
+        a5.setPin(1234);
+        System.out.println(a5.withdraw(200,1234));
+        a5.disp();
+
+        System.out.println(">>> Test 6: Account Status Management");
+        TestAccountEnhanced a6 = new TestAccountEnhanced(1006,"Charlie Green",35,2000,"Savings");
+        a6.disp();
+        System.out.println(a6.closeAccount());
+        a6.disp();
 
     }
 
