@@ -1,5 +1,5 @@
 public class InvalidPinException {
     public InvalidPinException(String message){
-        super(message)
+        super(message);
     }
 }
