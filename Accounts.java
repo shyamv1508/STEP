@@ -49,7 +49,7 @@ public class Accounts{
         return this.balance;
     }
 
-    String getAccountType(){
+    String gtAccountType(){
         return this.accountType;
     }
 
