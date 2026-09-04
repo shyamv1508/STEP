@@ -1,4 +1,4 @@
-public MinimumBalanceViolationException extends AccountException {
+public class MinimumBalanceViolationException extends AccountException {
 public MinimumBalanceViolationException(String message) {
         super(message);
     }

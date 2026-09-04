@@ -1,4 +1,4 @@
-public InsufficientBalanceException extends AccountException {
+public class InsufficientBalanceException extends AccountException {
 public InsufficientBalanceException(String message) {
         super(message);
     }
