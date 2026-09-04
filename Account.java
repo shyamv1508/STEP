@@ -153,7 +153,7 @@ public abstract class Account {
 
     protected void validateActive() throws InactiveAccountException {
         // TODO: Throw InactiveAccountException if not active-done
-        if(this.status == "Inactive"){
+        if(this.status.equals("Inactive")){
             throw new InactiveAccountException("Account is Inactive or Closed");
         }
     }
