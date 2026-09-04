@@ -1,50 +1,53 @@
+public class Account_1 {
 
-public abstract class Account {
     // ===== Constants =====
+    private static final double MIN_BALANCE_SAVINGS = 500.0;
+    private static final double MIN_BALANCE_CURRENT = 1000.0;
     private static final int MIN_AGE = 18;
     private static final int MIN_PIN = 1000;
     private static final int MAX_PIN = 9999;
+
     // ===== Fields =====
     private int accountNumber;
     private String name;
     private int age;
     private double balance;
+    private String accountType;
     private String status;
     private Integer pin;
-    // ===== Abstract Methods =====
-    public abstract double getMinimumBalance();
-    public abstract String getAccountType();
-    // ===== Constructor =====
-    public Account(int accountNumber, String name, int age,
-                   double initialBalance)
-            throws IllegalArgumentException {
-// Validate age
-        if (age < MIN_AGE) {
-            throw new IllegalArgumentException(
-                    "Customer must be at least " + MIN_AGE + " years old. Provided: " + age
-            );
-        }
 
-// Validate minimum balance (delegated to subclass)
-        double minBalance = getMinimumBalance();
-        if (initialBalance < minBalance) {
-            throw new IllegalArgumentException(
-                    getAccountType() + " account requires minimum balance of ₹" + minBalance +
-                            ". Provided: ₹" + initialBalance
-            );
+    // ===== Constructor =====
+    public Account_1(int accountNumber, String name, int age, double initialBalance, String accountType)
+            throws IllegalArgumentException {
+        // TODO: Validate age (must be >= 18)-done
+        if( age<MIN_AGE){
+            throw new IllegalArgumentException("Invalid Age: Age must be abouve 18");
         }
-// Initialize fields
+        // TODO: Validate account type (must be "Savings" or "Current")-done
+        if(accountType != "Savings" && accountType != "Current"){
+            throw new IllegalArgumentException("Invalid Account Type: Account type must be Savings or Current");
+        }
+        // TODO: Validate minimum balance based on account type-done
+        if(accountType == "Savings" && initialBalance < MIN_BALANCE_SAVINGS){
+            throw new IllegalArgumentException("Insufficient amount: minimum balance must be above: " + MIN_BALANCE_SAVINGS);
+        } else if (initialBalance < MIN_BALANCE_CURRENT) {
+            throw new IllegalArgumentException("Insufficient amount: minimum balance must be abouve: " + MIN_BALANCE_CURRENT);
+        }
+        // TODO: Initialize all fields-done
         this.accountNumber = accountNumber;
         this.name = name;
         this.age = age;
         this.balance = initialBalance;
+        this.accountType = accountType;
+        // TODO: Set status to "Active"-done
         this.status = "Active";
+        // TODO: Set pin to null-done
         this.pin = null;
     }
 
     // ===== Business Methods =====
     public void deposit(double amount)
- throws InvalidAmountException, InactiveAccountException {
+            throws InvalidAmountException, InactiveAccountException {
         // TODO: Check if account is active-done
         if(status == "Inactive"){
             throw new InactiveAccountException("Transaction Failed: Account is not Active");
@@ -58,7 +61,7 @@ public abstract class Account {
     }
 
     public void withdraw(double amount, Integer pin)
- throws InvalidAmountException,
+            throws InvalidAmountException,
             InsufficientBalanceException,
             MinimumBalanceViolationException,
             InactiveAccountException,
@@ -84,10 +87,10 @@ public abstract class Account {
             throw new InsufficientBalanceException("Invalid Amount: Balance is negative after the transaction");
         }
         // TODO: Check minimum balance after withdrawal-done
-        if(getAccountType() == "Savings" && (this.balance-getMinimumBalance()) < amount){
+        if(accountType == "Savings" && (this.balance-MIN_BALANCE_SAVINGS) < amount){
             throw new MinimumBalanceViolationException("Insufficient balance");
         }
-        else if(this.balance-getMinimumBalance() < amount){
+        else if(this.balance-MIN_BALANCE_CURRENT < amount){
             throw new MinimumBalanceViolationException("Insufficient balance");
         }
         // TODO: Deduct amount from balance-done
@@ -123,7 +126,7 @@ public abstract class Account {
         this.pin = pin;
     }
 
-    public boolean validatePin(int pin) {
+    public boolean verifyPin(int pin) {
         // TODO: Return true if PIN matches, false otherwise-done
         if(this.pin == pin){
             return true;
@@ -140,9 +143,15 @@ public abstract class Account {
     }
 
     // ===== Helper Methods =====
+    private double getMinimumBalance() {
+        // TODO: Return minimum balance based on account type-done
+        if(this.accountType == "Savings"){
+            return MIN_BALANCE_SAVINGS;
+        }
+        return MIN_BALANCE_CURRENT;
+    }
 
-
-    protected void validateActive() throws InactiveAccountException {
+    private void validateActive() throws InactiveAccountException {
         // TODO: Throw InactiveAccountException if not active-done
         if(this.status == "Inactive"){
             throw new InactiveAccountException("Account is Inactive or Closed");
@@ -167,10 +176,11 @@ public abstract class Account {
         return this.balance;
     }
 
+    String getAccountType(){
+        return this.accountType;
+    }
+
     String getStatus(){
         return this.status;
-    }
-    void setBalance(double balance){
-        this.balance = balance;
     }
 }
