@@ -23,7 +23,7 @@ throws IllegalArgumentException {
     }
 // ===== Override Withdraw for Overdraft =====
     @Override
-    public void withdraw(double amount, int pin)
+    public void withdraw(double amount, Integer pin)
 
 throws InvalidAmountException,
             InsufficientBalanceException,
@@ -35,8 +35,7 @@ throws InvalidAmountException,
         validatePin(pin);
         validateAmount(amount);
 // Check with overdraft
-        double availableBalance = getBalance() - getMinimumBalance() + OVERDRAFT_LIMIT - overdraftU
-        sed;
+        double availableBalance = getBalance() - getMinimumBalance() + OVERDRAFT_LIMIT - overdraftUsed;
         if (amount > availableBalance) {
             throw new InsufficientBalanceException(
                     "Insufficient funds. Available: ₹" + availableBalance +

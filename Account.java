@@ -46,7 +46,7 @@ public abstract class Account {
     public void deposit(double amount)
  throws InvalidAmountException, InactiveAccountException {
         // TODO: Check if account is active-done
-        if(status == "Inactive"){
+        if(status.equals("Inactive")){
             throw new InactiveAccountException("Transaction Failed: Account is not Active");
         }
         // TODO: Check if amount is positive-done
@@ -64,7 +64,7 @@ public abstract class Account {
             InactiveAccountException,
             InvalidPinException {
         // TODO: Check if account is active-done
-        if(status == "Inactive"){
+        if(status.equals("Inactive")){
             throw new InactiveAccountException("Inactive Account: Account is Inactive activate to make trancsactions");
         }
         // TODO: Check if PIN is set-done
@@ -84,7 +84,7 @@ public abstract class Account {
             throw new InsufficientBalanceException("Invalid Amount: Balance is negative after the transaction");
         }
         // TODO: Check minimum balance after withdrawal-done
-        if(getAccountType() == "Savings" && (this.balance-getMinimumBalance()) < amount){
+        if(getAccountType().equals("Savings") && (this.balance-getMinimumBalance()) < amount){
             throw new MinimumBalanceViolationException("Insufficient balance");
         }
         else if(this.balance-getMinimumBalance() < amount){
@@ -93,11 +93,20 @@ public abstract class Account {
         // TODO: Deduct amount from balance-done
         this.balance -= amount;
     }
+    public boolean validateAmount(double amount)throws InvalidAmountException{
+        if(amount <= 0){
+            throw new InvalidAmountException("Invalid Amount: Enter a Valid Amount");
+        }
+        return true;
+    }
+    public void updateDailyWithdrawalTotal(double amount){
+        this.balance -= amount;
+    }
 
     // ===== Account Status Management =====
     public void closeAccount() throws IllegalStateException {
         // TODO: Check if already closed-done
-        if(this.status == "Inactive"){
+        if(this.status.equals("Inactive")){
             throw new IllegalStateException("Account Already closed");
         }
         // TODO: Set status to "Inactive"-done
@@ -106,7 +115,7 @@ public abstract class Account {
 
     public void reopenAccount() throws IllegalStateException {
         // TODO: Check if already active-done
-        if(this.status == "Active"){
+        if(this.status.equals("Active")){
             throw new IllegalStateException("Account Already Active");
         }
         // TODO: Set status to "Active"done
@@ -116,7 +125,7 @@ public abstract class Account {
     // ===== PIN Management =====
     public void setPin(int pin) throws IllegalArgumentException {
         // TODO: Validate PIN (4-digit number)-done
-        if(pin < MIN_PIN && pin > MAX_PIN){
+        if(pin < MIN_PIN || pin > MAX_PIN){
             throw new IllegalArgumentException("Invalid Pin: Enter a valid pin");
         }
         // TODO: Set pin-done
