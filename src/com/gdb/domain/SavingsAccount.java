@@ -24,22 +24,26 @@ public class SavingsAccount extends BankAccount {
     // ============================================================
     // TODO: STEP 2.1 - return MINIMUM_BALANCE
     @Override
-    public double getMinimumBalance() { return 0.0; }
+    public double getMinimumBalance() { return MINIMUM_BALANCE; }
 
     // TODO: STEP 2.2 - return "SAVINGS"
     @Override
-    public String getAccountType() { return ""; }
+    public String getAccountType() { return "SAVINGS"; }
 
     // TODO: STEP 2.3 - return INTEREST_RATE
     @Override
-    public double getInterestRate() { return 0.0; }
+    public double getInterestRate() { return INTEREST_RATE; }
 
     // TODO: STEP 2.4 - return (this.balance - amount) >= MINIMUM_BALANCE
     @Override
-    public boolean canWithdraw(double amount) { return false; }
+    public boolean canWithdraw(double amount) { return (this.balance - amount) >= MINIMUM_BALANCE; }
 
     // TODO: STEP 2.5 - calculate monthly interest and deposit
     @Override
     public void applyMonthlyInterest() throws InactiveAccountException, InvalidAmountException {
+        if(status.equals("Inactive")){
+            throw new InactiveAccountException("Account is INACTIVE");
+        }
+
     }
 }
