@@ -13,9 +13,14 @@ public class CurrentAccount extends AbstractAccount {
     // TODO: Step 3.2 - Current debit rule (add @Override once processDebit is declared abstract in AbstractAccount):
     //   1. If amount > (balance + overdraftLimit) -> throw new InsufficientBalanceException("Overdraft limit exceeded")
     //   2. Otherwise subtract amount from balance (the balance may go negative, down to -overdraftLimit).
-    public void processDebit(double amount) throws AccountException {
+    @Override
+    public void processDebit(double amount) throws AccountException,InsufficientBalanceException{
+        if (amount > (balance + this.overdraftLimit)){
+            throw new InsufficientBalanceException("Overdraft limit exceeded");
+        }
+        this.balance -= amount;
     }
 
-    public double getOverdraftLimit() { return overdraftLimit; }
+    public double getOverdraftLimit() { return this.overdraftLimit; }
     public void setOverdraftLimit(double overdraftLimit) { this.overdraftLimit = overdraftLimit; }
 }

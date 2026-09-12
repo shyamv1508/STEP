@@ -15,7 +15,9 @@ public class FixedDepositAccount extends AbstractAccount {
     // TODO: Step 3.4 - Fixed Deposit debit rule (add @Override once processDebit is declared abstract in AbstractAccount):
     //   Premature withdrawals are never allowed, so always
     //   throw new AccountException("Premature withdrawal not allowed on Fixed Deposit")
+    @Override
     public void processDebit(double amount) throws AccountException {
+        throw new AccountException("Premature withdrawal not allowed on Fixed Deposit");
     }
 
     public double calculateMaturityAmount() {

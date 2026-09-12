@@ -9,8 +9,7 @@ public class SavingsAccount extends AbstractAccount {
     public SavingsAccount(String accountNumber, String name, int age, double balance, String status, String pin) {
         super(accountNumber, name, age, balance, "SAVINGS", status, pin);
     }
-
-    public SavingsAccount(String accountNumber, String name, int age, double balance, String status, String pin, double minBalance, double interestRate) {
+    public SavingsAccount(String accountNumber, String name, int age, double balance, String status, String pin, double minBalance, double interestRate)  {
         super(accountNumber, name, age, balance, "SAVINGS", status, pin);
         this.minBalance = minBalance;
         this.interestRate = interestRate;
@@ -19,7 +18,12 @@ public class SavingsAccount extends AbstractAccount {
     // TODO: Step 3.1 - Savings debit rule (add @Override once processDebit is declared abstract in AbstractAccount):
     //   1. If (balance - amount) < minBalance -> throw new MinimumBalanceViolationException("Cannot breach minimum balance of Rs " + minBalance)
     //   2. Otherwise subtract amount from balance.
-    public void processDebit(double amount) throws AccountException {
+    @Override
+    public void processDebit(double amount) throws AccountException,MinimumBalanceViolationException {
+        if ((this.balance - amount) < this.minBalance){
+            throw new MinimumBalanceViolationException("Cannot breach minimum balance of Rs " + this.minBalance);
+        }
+        this.balance -= amount;
     }
 
     public void applyInterest() {

@@ -1,5 +1,11 @@
 package com.gdb.domain;
+
 import com.gdb.exceptions.*;
+
+/**
+ * AbstractAccount - Defines shared template methods and forces subclasses to implement processDebit.
+ * The shared fields and concrete methods below are moved up unchanged from the Activity 7/8 Account class.
+ */
 public abstract class AbstractAccount {
     protected String accountNumber;
     protected String name;
@@ -7,66 +13,73 @@ public abstract class AbstractAccount {
     protected double balance;
     protected String accountType;
     protected String status;
-    protected Integer pin;
+    protected String pin;
 
-
-    public void deposit(double amount) throws InactiveAccountException, InvalidAmountException {
-        if (!"ACTIVE".equalsIgnoreCase(this.status)) {
-            throw new InactiveAccountException("Account is not active.");
-        }
-        if (amount <= 0) {
-            throw new InvalidAmountException("Deposit amount must be positive.");
-        }
-        this.balance += amount;
-    }
-
-
-    public void validatePin(Integer pin) throws InvalidPinException{
-        if(pin == null){
-            throw new InvalidPinException("Pin not Set");
-        }
-        if(this.pin != pin){
-            throw new InvalidPinException("Invalid Pin: Enter the corect pin");
-        }
-
-    }
-
-    public void changePin(Integer pin)throws InvalidPinException{
-        if(pin < 0001 || pin >9999){
-            throw new InvalidPinException("Enter a valid pin");
-        }
+    public AbstractAccount(String accountNumber, String name, int age, double balance, String accountType, String status, String pin) {
+        if (age < 18) throw new IllegalArgumentException("Customer age must be 18 or above");
+        if (balance < 0) throw new IllegalArgumentException("Initial balance cannot be negative");
+        if (pin == null || !pin.matches("\\d{4}")) throw new IllegalArgumentException("PIN must be 4 digits");
+        this.accountNumber = accountNumber;
+        this.name = name;
+        this.age = age;
+        this.balance = balance;
+        this.accountType = accountType;
+        this.status = status;
         this.pin = pin;
     }
 
-
-    public void displayAccountInfo(){
-        String temp;
-        if (this.pin == null){
-            temp = "Not Set";
-
-        }
-        else {
-            temp = "Set";
-        }
-        System.out.println("[" + this.accountType + "]  " + "Name"  + this.name + "  |  Age: " + this.age + " | Account Number " + this.accountNumber + "  |  Balance:" + this.balance + "  |  Status: " + this.status + "  |  Pin: " + temp);
+    public boolean validatePin(String enteredPin) {
+        return this.pin != null && this.pin.equals(enteredPin);
     }
 
-    public abstract void processDebit(double amount)throws AccountException;
+    public boolean changePin(String oldPin, String newPin) {
+        if (!validatePin(oldPin)) return false;
+        if (newPin == null || !newPin.matches("\\d{4}")) return false;
+        this.pin = newPin;
+        return true;
+    }
 
-    public void  withdraw(double amount, Integer pin) throws AccountException,InvalidPinException,InvalidAmountException,InactiveAccountException{
-        validatePin(pin);
+    public void deposit(double amount) throws InvalidAmountException {
+        if (amount <= 0) throw new InvalidAmountException("Deposit amount must be positive");
+        this.balance += amount;
+    }
 
-        if(this.status.equals("Inactive")){
-            throw new InactiveAccountException("Account Inactive");
+    public void withdraw(double amount, String enteredPin) throws AccountException,InvalidPinException,InactiveAccountException,InvalidAmountException {
+        // TODO: Step 2 - Template Method: enforce this fixed sequence for EVERY account type:
+        //   1. PIN incorrect (validatePin fails) -> throw new InvalidPinException("Invalid PIN entered")
+        if(!validatePin(enteredPin)){
+            throw new InvalidPinException("Invalid PIN entered");
         }
-
+        //   2. status is not "ACTIVE"            -> throw new InactiveAccountException("Account is not active")
+        if(this.status.equals("INACTIVE")){
+            throw new InactiveAccountException("Account is not active");
+        }
+        //   3. amount <= 0                       -> throw new InvalidAmountException("Withdrawal amount must be positive")
         if(amount <= 0){
-            throw new InvalidAmountException("Amount zero or Negative");
+            throw new InvalidAmountException("Withdrawal amount must be positive");
         }
-
+        //   4. Call processDebit(amount) so the subclass applies its own debit rule.-
         processDebit(amount);
     }
 
+    // TODO: Step 1.4 - Declare the hook every subclass must implement:
+    public abstract void processDebit(double amount)throws AccountException;
+    //   a public abstract method named processDebit that takes a double amount, returns void,
+    //   and throws AccountException.
 
+    public void displayAccountInfo() {
+        System.out.println("Account Number: " + accountNumber);
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+        System.out.println("Balance: Rs " + balance);
+        System.out.println("Account Type: " + accountType);
+        System.out.println("Status: " + status);
+    }
 
+    public String getAccountNumber() { return accountNumber; }
+    public String getName() { return name; }
+    public int getAge() { return age; }
+    public double getBalance() { return balance; }
+    public String getAccountType() { return accountType; }
+    public String getStatus() { return status; }
 }
