@@ -2,54 +2,26 @@ package com.gdb.domain;
 
 import com.gdb.exceptions.*;
 
-public class FixedDepositAccount extends BankAccount {
-    public static final double MINIMUM_BALANCE = 10000.0;
-    public static final double INTEREST_RATE = 6.5;
-    public static final double PREMATURE_PENALTY_RATE = 1.0;
-
+public class FixedDepositAccount extends AbstractAccount {
     private int tenureMonths;
-    private boolean isMatured;
+    private double interestRate;
 
-    public FixedDepositAccount(String accountNumber, String name, int age, double balance, String status, String pin, int tenureMonths)
-            throws InvalidAmountException, MinimumBalanceViolationException {
+    public FixedDepositAccount(String accountNumber, String name, int age, double balance, String status, String pin, int tenureMonths, double interestRate) {
         super(accountNumber, name, age, balance, "FIXED_DEPOSIT", status, pin);
-        if (balance < MINIMUM_BALANCE) {
-            throw new MinimumBalanceViolationException("Minimum balance for Fixed Deposit is Rs " + MINIMUM_BALANCE);
-        }
         this.tenureMonths = tenureMonths;
-        this.isMatured = false;
+        this.interestRate = interestRate;
     }
 
-    public FixedDepositAccount(String accountNumber, String name, int age, double balance, String status, int tenureMonths)
-            throws InvalidAmountException, MinimumBalanceViolationException {
-        this(accountNumber, name, age, balance, status, "0000", tenureMonths);
+    // TODO: Step 3.4 - Fixed Deposit debit rule (add @Override once processDebit is declared abstract in AbstractAccount):
+    //   Premature withdrawals are never allowed, so always
+    //   throw new AccountException("Premature withdrawal not allowed on Fixed Deposit")
+    public void processDebit(double amount) throws AccountException {
     }
 
-    // ============================================================
-    // 📝 STEP 4: Implement Abstract Methods for FixedDepositAccount
-    // ============================================================
-    // TODO: STEP 4.1 - return MINIMUM_BALANCE
-    @Override
-    public double getMinimumBalance() { return 0.0; }
-
-    // TODO: STEP 4.2 - return "FIXED_DEPOSIT"
-    @Override
-    public String getAccountType() { return ""; }
-
-    // TODO: STEP 4.3 - return isMatured ? INTEREST_RATE : (INTEREST_RATE - PREMATURE_PENALTY_RATE)
-    @Override
-    public double getInterestRate() { return 0.0; }
-
-    // TODO: STEP 4.4 - return amount <= this.balance
-    @Override
-    public boolean canWithdraw(double amount) { return false; }
-
-    // TODO: STEP 4.5 - calculate monthly interest and deposit
-    @Override
-    public void applyMonthlyInterest() throws InactiveAccountException, InvalidAmountException {
+    public double calculateMaturityAmount() {
+        return this.balance * Math.pow(1 + (interestRate / 100.0) / 12, 12 * (tenureMonths / 12.0));
     }
 
-    public void matureDeposit() { this.isMatured = true; }
-    public boolean isMatured() { return isMatured; }
     public int getTenureMonths() { return tenureMonths; }
+    public double getInterestRate() { return interestRate; }
 }
