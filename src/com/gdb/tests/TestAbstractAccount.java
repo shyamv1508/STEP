@@ -13,15 +13,19 @@ public class TestAbstractAccount {
         AbstractAccount[] accounts = {new SavingsAccount("1001","Sugan",20,10000,"ACTIVE","1234",500,4.0), new CurrentAccount("1002","sugan",20,2000,"ACTIVE","1234",2000), new SalaryAccount("1003","sugan",20,3000,"ACTIVE","1234","Venkat")};
 
         // TODO: Step 2 - Implement and test secure fund transfer from Savings to Current account with PIN authentication
-        double amount = 3000;
-        String Pin = "1234";
-        try {
-            accounts[0].withdraw(amount, Pin);
-            accounts[1].deposit(amount);
-        }catch(AccountException e){
-            System.out.println("Transfer Failed!!" + e.getMessage());
+
+
+        public void FundTransfer(double amount, String Pin)throws AccountException {
+            try {
+                accounts[0].withdraw(amount, Pin);
+                accounts[1].deposit(amount);
+            } catch (AccountException e) {
+                System.out.println("Transfer Failed!!" + e.getMessage());
+            }
+            System.out.println("Transfer Rs" + amount + "from Savings to Current: SUCCESS");
+            System.out.println("Savings Balance: Rs " + accounts[0].getBalance() + " | Current Balance: Rs " + accounts[1].getBalance());
         }
-        System.out.println("Transfer Rs" + amount +  "from Savings to Current: SUCCESS");
+        FundTransfer(3000,"1234");
         // TODO: Step 3 - Test failed transfer with wrong PIN and verify no balance was credited/debited
 
         // TODO: Step 4 - Process monthly cycle applying interest to every SavingsAccount and checking each SalaryAccount's inactive months
