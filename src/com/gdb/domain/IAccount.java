@@ -19,4 +19,5 @@ public interface IAccount {
     void deposit(double amount) throws InvalidAmountException;
     void withdraw(double amount, String enteredPin) throws AccountException;
     void displayAccountInfo();
+
 }
