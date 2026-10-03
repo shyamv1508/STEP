@@ -3,7 +3,7 @@ package com.gdb.domain;
 import com.gdb.exceptions.*;
 
 // TODO: Step 2 - Make AbstractAccount formally implement the IAccount interface (add "implements IAccount").
-public abstract class AbstractAccount {
+public abstract class AbstractAccount implements IAccount {
     protected String accountNumber;
     protected String name;
     protected int age;

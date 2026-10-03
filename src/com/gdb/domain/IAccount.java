@@ -10,4 +10,7 @@ import com.gdb.exceptions.*;
 //   - displayAccountInfo(), returning void.
 //   Tip: every signature must match the method that already exists in AbstractAccount.
 public interface IAccount {
+    string getAccNum(){
+        return accountNumber;
+    }
 }
