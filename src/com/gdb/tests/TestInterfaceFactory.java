@@ -1,26 +1,26 @@
 package com.gdb.tests;
 
 import com.gdb.domain.*;
+import com.gdb.exceptions.*;
 
 public class TestInterfaceFactory {
     public static void main(String[] args) {
-        System.out.println("=== Activity 11: Interface & Factory Pattern Test ===");
+        System.out.println("=== Activity 12: Factory-Driven System Suite ===");
 
-        // TODO: After completing IAccount, AbstractAccount and AccountFactory, uncomment the test calls
-        // below and run this program. Your output should match the "Expected Output" section of README.md.
+        // NOTE: If you completed Activity 11 successfully, paste your working IAccount.java and AccountFactory.java into src/com/gdb/domain (replacing the provided versions).
 
-        IAccount acc1 = AccountFactory.createAccount("SAVINGS", "SAV1001", "Rajesh Sharma", 28, 5000.0, "ACTIVE", "1234");
-        System.out.println("Factory created: " + acc1.getAccountType() + " account for " + acc1.getName());
-        //
-        IAccount acc2 = AccountFactory.createAccount("CURRENT", "CUR1001", "Priya Patel", 34, 10000.0, "ACTIVE", "5678");
-        System.out.println("Factory created: " + acc2.getAccountType() + " account for " + acc2.getName());
-        //
-        IAccount acc3 = AccountFactory.createAccount("FIXED_DEPOSIT", "FD1001", "Amit Kumar", 45, 50000.0, "ACTIVE", "1111");
-        System.out.println("Factory created: " + acc3.getAccountType() + " account for " + acc3.getName());
-        //
-        IAccount acc4 = AccountFactory.createAccount("SALARY", "SAL1001", "Sneha Verma", 26, 30000.0, "ACTIVE", "2222");
-        System.out.println("Factory created: " + acc4.getAccountType() + " account for " + acc4.getName());
-        //
-        System.out.println("All accounts successfully created through AccountFactory!");
+        // TODO: Step 1 - Instantiate Savings, Current, and FixedDeposit accounts exclusively through AccountFactory.createAccount()
+
+        // TODO: Step 2 - Perform deposits and withdrawals through the IAccount interface references
+
+        // TODO: Step 3 - Verify Savings minimum balance rule enforcement through the interface
+
+        // TODO: Step 4 - Verify Current overdraft limit enforcement through the interface
+
+        // TODO: Step 5 - Verify FixedDeposit premature withdrawal rejection through the interface
+
+        // TODO: Step 6 - Verify requesting an invalid account type from AccountFactory throws IllegalArgumentException
+
+        System.out.println("=== Complete Activity 12 test suite and run ===");
     }
 }

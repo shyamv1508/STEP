@@ -1,44 +1,32 @@
-# Activity 11: Interface & Factory Pattern
+# Activity 12: Factory-Driven Banking System
 
 ## Objective
-Decouple banking operations using the `IAccount` interface and implement the Factory Design Pattern in `AccountFactory` for centralized object creation.
+Build a factory-driven test suite where accounts are instantiated solely through `AccountFactory` and manipulated exclusively through the `IAccount` interface.
 
 ---
 
-## Target Files to Complete
-- `src/com/gdb/domain/IAccount.java`
-- `src/com/gdb/domain/AccountFactory.java`
+## Target File to Complete
+- `src/com/gdb/tests/TestInterfaceFactory.java`
 
 ---
 
 ## Plain English Step-by-Step Instructions
 
-### Step 1: Define `IAccount` Interface
-Create the `IAccount` interface defining the contract that all bank accounts must follow:
-- Getters for account number, customer name, balance, account type, and status.
-- `deposit(double amount)` declaring `InvalidAmountException`.
-- `withdraw(double amount, String pin)` declaring `AccountException`.
-- `displayAccountInfo()` returning void.
+### Step 1: Instantiate Accounts via Factory
+Use `AccountFactory.createAccount` to create instances of `SavingsAccount`, `CurrentAccount`, and `FixedDepositAccount`, assigning each to an `IAccount` reference.
 
-### Step 2: Implement `IAccount` in `AbstractAccount`
-Update `AbstractAccount` so that it formally implements `IAccount`.
+### Step 2: Test Interface-Driven Transactions
+Perform deposits and withdrawals through the `IAccount` interface variables without casting to specific concrete classes.
 
-### Step 3: Implement `AccountFactory`
-Create a factory class named `AccountFactory` with a static creation method `createAccount`:
-1. Accept the desired account type (e.g., "SAVINGS", "CURRENT", "FIXED_DEPOSIT", "SALARY") along with basic account parameters.
-2. Use a `switch` statement on the account type:
-    - If "SAVINGS", return a new `SavingsAccount`.
-    - If "CURRENT", return a new `CurrentAccount`.
-    - If "FIXED_DEPOSIT" or "FD", return a new `FixedDepositAccount`.
-    - If "SALARY", return a new `SalaryAccount`.
-    - If an unknown type is provided, throw an `IllegalArgumentException`.
+### Step 3: Verify Subclass Business Rules
+1. Verify that savings accounts enforce minimum balance rules through the interface.
+2. Verify that current accounts allow overdrafts up to the limit through the interface.
+3. Verify that fixed deposit accounts reject premature withdrawals through the interface.
+4. Verify that requesting an unknown account type from the factory throws an `IllegalArgumentException`.
 
 ---
 
 ## How to Compile & Run (Multi-OS Guide)
-
-> [!NOTE]
-> Before running the tests, open `src/com/gdb/tests/TestInterfaceFactory.java` and uncomment the test calls inside the `main` method once you have finished `IAccount`, `AbstractAccount` and `AccountFactory`.
 
 ### Windows (PowerShell)
 ```powershell
@@ -75,10 +63,10 @@ java -cp bin com.gdb.tests.TestInterfaceFactory
 
 ## Expected Output
 ```
-=== Activity 11: Interface & Factory Pattern Test ===
-Factory created: SAVINGS account for Rajesh Sharma
-Factory created: CURRENT account for Priya Patel
-Factory created: FIXED_DEPOSIT account for Amit Kumar
-Factory created: SALARY account for Sneha Verma
-All accounts successfully created through AccountFactory!
+=== Activity 12: Factory-Driven System Suite ===
+[Test 1] Savings Account Creation & Deposit: [PASS]
+[Test 2] Current Account Overdraft Withdrawal: [PASS]
+[Test 3] Fixed Deposit Premature Withdrawal Block: [PASS]
+[Test 4] Invalid Type Rejection: [PASS]
+Factory-driven architecture successfully verified!
 ```
