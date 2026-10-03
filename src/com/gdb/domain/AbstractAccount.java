@@ -2,10 +2,7 @@ package com.gdb.domain;
 
 import com.gdb.exceptions.*;
 
-/**
- * AbstractAccount - Defines shared template methods and forces subclasses to implement processDebit.
- * The shared fields and concrete methods below are moved up unchanged from the Activity 7/8 Account class.
- */
+// TODO: Step 2 - Make AbstractAccount formally implement the IAccount interface (add "implements IAccount").
 public abstract class AbstractAccount {
     protected String accountNumber;
     protected String name;
@@ -44,28 +41,14 @@ public abstract class AbstractAccount {
         this.balance += amount;
     }
 
-    public void withdraw(double amount, String enteredPin) throws AccountException,InvalidPinException,InactiveAccountException,InvalidAmountException {
-        // TODO: Step 2 - Template Method: enforce this fixed sequence for EVERY account type:
-        //   1. PIN incorrect (validatePin fails) -> throw new InvalidPinException("Invalid PIN entered")
-        if(!validatePin(enteredPin)){
-            throw new InvalidPinException("Invalid PIN entered");
-        }
-        //   2. status is not "ACTIVE"            -> throw new InactiveAccountException("Account is not active")
-        if(this.status.equals("INACTIVE")){
-            throw new InactiveAccountException("Account is not active");
-        }
-        //   3. amount <= 0                       -> throw new InvalidAmountException("Withdrawal amount must be positive")
-        if(amount <= 0){
-            throw new InvalidAmountException("Withdrawal amount must be positive");
-        }
-        //   4. Call processDebit(amount) so the subclass applies its own debit rule.-
+    public void withdraw(double amount, String enteredPin) throws AccountException {
+        if (!validatePin(enteredPin)) throw new InvalidPinException("Invalid PIN entered");
+        if (!"ACTIVE".equalsIgnoreCase(this.status)) throw new InactiveAccountException("Account is not active");
+        if (amount <= 0) throw new InvalidAmountException("Withdrawal amount must be positive");
         processDebit(amount);
     }
 
-    // TODO: Step 1.4 - Declare the hook every subclass must implement:
-    public abstract void processDebit(double amount)throws AccountException;
-    //   a public abstract method named processDebit that takes a double amount, returns void,
-    //   and throws AccountException.
+    public abstract void processDebit(double amount) throws AccountException;
 
     public void displayAccountInfo() {
         System.out.println("Account Number: " + accountNumber);
@@ -75,8 +58,6 @@ public abstract class AbstractAccount {
         System.out.println("Account Type: " + accountType);
         System.out.println("Status: " + status);
     }
-
-
 
     public String getAccountNumber() { return accountNumber; }
     public String getName() { return name; }

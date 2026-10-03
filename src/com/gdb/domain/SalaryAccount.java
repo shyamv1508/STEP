@@ -12,12 +12,9 @@ public class SalaryAccount extends AbstractAccount {
         this.inactiveMonths = 0;
     }
 
-    // TODO: Step 3.3 - Salary debit rule (add @Override once processDebit is declared abstract in AbstractAccount):
-    //   1. If amount > balance -> throw new InsufficientBalanceException("Insufficient funds in Salary account")
-    //   2. Otherwise subtract amount from balance.
     @Override
-    public void processDebit(double amount) throws AccountException,InsufficientBalanceException {
-        if (amount > balance){
+    public void processDebit(double amount) throws AccountException {
+        if (amount > this.balance) {
             throw new InsufficientBalanceException("Insufficient funds in Salary account");
         }
         this.balance -= amount;
