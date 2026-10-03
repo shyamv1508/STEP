@@ -1,41 +1,28 @@
-# Activity 13.1: Account Rules Engine (In-Memory Lookup)
+# Activity 13.2: Dynamic Account Rules Integration
 
 ## Objective
-Create a centralized `AccountRulesEngine` class using in-memory lookup tables (`Map`) to determine minimum balance, interest rates, and limits based on customer relationship tenure.
+Connect account domain classes and `AccountFactory` to `AccountRulesEngine` so that minimum balances and interest rates are assigned dynamically at runtime based on customer tenure.
 
 ---
 
-## Target File to Complete
-- `src/com/gdb/domain/AccountRulesEngine.java`
+## Target Files to Complete
+- `src/com/gdb/domain/SavingsAccount.java`
+- `src/com/gdb/domain/AccountFactory.java`
 
 ---
 
 ## Plain English Step-by-Step Instructions
 
-### Step 1: Define Tenure Buckets and Lookup Tables
-In `AccountRulesEngine.java`, set up lookup tables for Savings account rules across 4 tenure tiers:
-- **New (0 to 1 year)**: Minimum Balance = 10000.0, Interest Rate = 2.70%
-- **Standard (1 to 3 years)**: Minimum Balance = 7500.0, Interest Rate = 3.00%
-- **Premium (3 to 5 years)**: Minimum Balance = 5000.0, Interest Rate = 3.50%
-- **Privilege (5+ years)**: Minimum Balance = 2500.0, Interest Rate = 4.00%
+### Step 1: Add Tenure Field to `SavingsAccount`
+1. Add a private integer field `tenureYears` to `SavingsAccount`.
+2. In the constructor, query `AccountRulesEngine.getSavingsMinBalance(tenureYears)` to set `minBalance`.
+3. Query `AccountRulesEngine.getSavingsInterestRate(tenureYears)` to set `interestRate`.
 
-### Step 2: Implement `getSavingsMinBalance(int tenureYears)`
-Write a static method that takes customer tenure in years:
-1. If tenure is 5 years or more, return 2500.0.
-2. If tenure is 3 to 4 years, return 5000.0.
-3. If tenure is 1 to 2 years, return 7500.0.
-4. Otherwise (new customer), return 10000.0.
+### Step 2: Update `AccountFactory`
+Update `AccountFactory.createAccount` to accept customer tenure and pass it when constructing accounts.
 
-### Step 3: Implement `getSavingsInterestRate(int tenureYears)`
-Write a static method that takes customer tenure in years:
-1. If tenure is 5 years or more, return 4.00%.
-2. If tenure is 3 to 4 years, return 3.50%.
-3. If tenure is 1 to 2 years, return 3.00%.
-4. Otherwise (new customer), return 2.70%.
-
-### Step 4: Implement Current Account & FD Rules
-1. `getCurrentOverdraftLimit(double monthlyTurnover)`: Returns 2.5 times the monthly turnover (minimum 25000.0).
-2. `getFDInterestRate(int months)`: Returns interest rate based on deposit duration (e.g., 6.5% for 12+ months).
+### Step 3: Verify Dynamic Rule Assignment
+Create accounts for customers with different tenure lengths (e.g., 0 years, 2 years, 4 years, 6 years) and verify that their minimum balance requirements and interest rates are dynamically determined by the rules engine.
 
 ---
 
@@ -76,10 +63,9 @@ java -cp bin com.gdb.tests.TestAccountRulesEngine
 
 ## Expected Output
 ```
-=== Activity 13.1: Hardcoded Rules Engine Test ===
-Tenure 0 yrs -> Min Balance: Rs 10000.0 | Interest: 2.7%
-Tenure 2 yrs -> Min Balance: Rs 7500.0  | Interest: 3.0%
-Tenure 4 yrs -> Min Balance: Rs 5000.0  | Interest: 3.5%
-Tenure 6 yrs -> Min Balance: Rs 2500.0  | Interest: 4.0%
-Rules Engine lookup completed successfully!
+=== Activity 13.2: Dynamic Account Rules Test ===
+Created Savings Account (Tenure: 4 yrs):
+ -> Min Balance: Rs 5000.0 (Dynamically fetched)
+ -> Interest Rate: 3.5% (Dynamically fetched)
+Dynamic rule integration verified!
 ```

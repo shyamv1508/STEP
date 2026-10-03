@@ -3,11 +3,17 @@ package com.gdb.domain;
 import com.gdb.exceptions.*;
 
 public class SavingsAccount extends AbstractAccount {
-    private double minBalance = 1000.0;
-    private double interestRate = 4.0;
+    // TODO: Step 1.1 - Declare a private int field tenureYears.
+    private int tenureYears;
+    private double minBalance;
+    private double interestRate;
 
-    public SavingsAccount(String accountNumber, String name, int age, double balance, String status, String pin) {
+    public SavingsAccount(String accountNumber, String name, int age, double balance, String status, String pin, int tenureYears) {
         super(accountNumber, name, age, balance, "SAVINGS", status, pin);
+        // TODO: Step 1.2 - Store tenureYears in its field, then ask the rules engine for this tenure's rules:
+
+        this.minBalance   = AccountRulesEngine.getSavingsMinBalance(tenureYears);
+        this.interestRate = AccountRulesEngine.getSavingsInterestRate(tenureYears);
     }
 
     public SavingsAccount(String accountNumber, String name, int age, double balance, String status, String pin, double minBalance, double interestRate) {
@@ -27,6 +33,11 @@ public class SavingsAccount extends AbstractAccount {
     public void applyInterest() {
         double interest = this.balance * (interestRate / 100.0);
         this.balance += interest;
+    }
+
+    public int getTenureYears() {
+        // TODO: Step 1.1 - Return the tenureYears field.
+        return tenureYears;
     }
 
     public double getMinBalance() { return minBalance; }
