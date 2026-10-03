@@ -15,13 +15,13 @@ public class AccountRulesEngine {
     public static String getSavingsBucket(int tenureYears) {
         // TODO: Step 1 - Map tenure to a bucket name:
         //   >= 5 -> "PRIVILEGE", >= 3 -> "PREMIUM", >= 1 -> "STANDARD", otherwise "NEW".
-        if(tentureYears >= 5){
+        if(tenureYears >= 5){
             return "PRIVILEGE";
         }
-        else if(tentureYears >= 3){
+        else if(tenureYears >= 3){
             return "PREMIUM";
         }
-        else if(tentureYears >= 1){
+        else if(tenureYears >= 1){
             return "STANDARD";
         }
         else{
@@ -33,13 +33,13 @@ public class AccountRulesEngine {
     public static double getSavingsMinBalance(int tenureYears) {
         // TODO: Step 2 - Look up getSavingsBucket(tenureYears) in your minimum-balance map
         //   (fall back to 10000.0 if the bucket is missing, e.g. with getOrDefault).
-        if(tentureYears >= 5){
+        if(tenureYears >= 5){
             return 2500.0;
         }
-        else if(tentureYears >= 3){
+        else if(tenureYears >= 3){
             return 5000.0;
         }
-        else if(tentureYears >=1){
+        else if(tenureYears >=1){
             return 7500.0;
         }
         else{
@@ -49,13 +49,13 @@ public class AccountRulesEngine {
 
     public static double getSavingsInterestRate(int tenureYears) {
         // TODO: Step 3 - Look up getSavingsBucket(tenureYears) in your interest-rate map (fall back to 2.70).
-        if(tentureYears >= 5){
+        if(tenureYears >= 5){
             return 4.00;
         }
-        else if(tentureYears >= 3){
+        else if(tenureYears >= 3){
             return 3.50;
         }
-        else if(tentureYears >=1){
+        else if(tenureYears >=1){
             return 3.00;
         }
         else{
