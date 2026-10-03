@@ -11,7 +11,7 @@ public class SavingsAccount extends AbstractAccount {
     public SavingsAccount(String accountNumber, String name, int age, double balance, String status, String pin, int tenureYears) {
         super(accountNumber, name, age, balance, "SAVINGS", status, pin);
         // TODO: Step 1.2 - Store tenureYears in its field, then ask the rules engine for this tenure's rules:
-
+        this.tenureYears = tenureYears;
         this.minBalance   = AccountRulesEngine.getSavingsMinBalance(tenureYears);
         this.interestRate = AccountRulesEngine.getSavingsInterestRate(tenureYears);
     }
