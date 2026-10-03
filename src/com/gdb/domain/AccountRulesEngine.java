@@ -16,13 +16,13 @@ public class AccountRulesEngine {
         // TODO: Step 3 - Replace the Activity 13 in-memory map lookup: read the key
         //   "min.balance." + getSavingsBucket(tenureYears) from savingsLoader with getDouble(...),
         //   falling back to 10000.0 when the key is missing.
-        return 0.0;
+        return savingsLoader.getDouble("min.balance."+getSavingsBucket(tenureYears),10000.0);
     }
 
     public static double getSavingsInterestRate(int tenureYears) {
         // TODO: Step 3 - Read the key "interest.rate." + getSavingsBucket(tenureYears) from savingsLoader
         //   with getDouble(...), falling back to 2.70.
-        return 0.0;
+        return savingsLoader.getDouble("interest.rate."+getSavingsBucket(tenureYears),2.70);
     }
 
     public static double getCurrentOverdraftLimit(double monthlyTurnover) {

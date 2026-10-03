@@ -7,31 +7,74 @@ import java.util.Properties;
 
 public class AccountRulesPropertiesLoader {
     private Properties properties = new Properties();
-
     public AccountRulesPropertiesLoader(String configPath) {
         loadProperties(configPath);
     }
-
-    // TODO: Step 2.1 - Load the key=value pairs from configPath into 'properties' with properties.load(InputStream):
-    //   1. Try the classpath first: getClass().getClassLoader().getResourceAsStream(configPath).
-    //   2. If that returns null and new File(configPath) exists, open it with a FileInputStream instead.
-    //   3. Close the stream afterwards. Catch any exception and print a warning (leave 'properties' empty).
     private void loadProperties(String configPath) {
+        InputStream input = null;
+        try {
+            // First try loading from classpath
+            input = getClass().getClassLoader()
+                    .getResourceAsStream(configPath);
+            // If not found, try loading from file system
+            if (input == null) {
+                File file = new File(configPath);
+                if (file.exists()) {
+                    input = new FileInputStream(file);
+                }
+            }
+            // Load the properties
+            if (input != null) {
+                properties.load(input);
+                System.out.println(
+                        "[Config] Loaded rules from " + configPath
+                );
+            } else {
+
+                System.out.println(
+                        "[Config] Rules file not found: " + configPath
+                );
+            }
+        } catch (Exception e) {
+
+            System.out.println(
+                    "[Config] Warning: Could not load " + configPath
+            );
+        } finally {
+            // Close the input stream
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (Exception e) {
+                    // Ignore close error
+                }
+            }
+        }
     }
 
-    // TODO: Step 2.2 - Return the value stored for key, or defaultValue if the key is missing.
     public String getProperty(String key, String defaultValue) {
-        return defaultValue;
+        return properties.getProperty(key, defaultValue);
     }
-
-    // TODO: Step 2.2 - Parse the value for key as a double (trim it first).
-    //   Return defaultValue if the key is missing or the value is not a number (NumberFormatException).
     public double getDouble(String key, double defaultValue) {
-        return defaultValue;
+        String value = properties.getProperty(key);
+        if (value == null) {
+            return defaultValue;
+        }
+        try {
+            return Double.parseDouble(value.trim());
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
     }
-
-    // TODO: Same as getDouble, but parse the value with Integer.parseInt.
     public int getInt(String key, int defaultValue) {
-        return defaultValue;
+        String value = properties.getProperty(key);
+        if (value == null) {
+            return defaultValue;
+        }
+        try {
+            return Integer.parseInt(value.trim());
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
     }
 }
