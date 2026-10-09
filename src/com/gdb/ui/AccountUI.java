@@ -4,194 +4,192 @@ import com.gdb.domain.IAccount;
 import com.gdb.domain.Transaction;
 import com.gdb.command.TransactionCommand;
 import com.gdb.service.AccountService;
-import com.gdb.exceptions.AccountException;
 
 import java.util.*;
 
 public class AccountUI {
-    // ============================================================
-    // 📝 STEP 1: Declare Fields
-    // ============================================================
-    // TODO: declare private final AccountService service and Scanner scanner
+    private final AccountService service;
+    private final Scanner scanner;
 
-    // ============================================================
-    // 📝 STEP 2: Constructor
-    //
-    // INSTRUCTIONS:
-    //   1. Accept AccountService parameter.
-    //   2. Assign to this.service.
-    //   3. Initialize scanner = new Scanner(System.in).
-    // ============================================================
-    // TODO: implement constructor
     public AccountUI(AccountService service) {
-        // TODO: Step 2 - implement constructor
+        this.service = Objects.requireNonNull(service, "AccountService cannot be null");
+        this.scanner = new Scanner(System.in);
     }
 
-    // ============================================================
-    // 📝 STEP 3: Implement start() (Main Menu Loop)
-    //
-    // INSTRUCTIONS:
-    //   while (true) {
-    //     displayMainMenu();
-    //     int choice = readInt("Enter your choice: ");
-    //     try {
-    //       switch (choice) {
-    //         case 1: handleOpenAccount(); break;
-    //         case 2: handleDeposit(); break;
-    //         case 3: handleWithdraw(); break;
-    //         case 4: handleTransfer(); break;
-    //         case 5: handleCloseAccount(); break;
-    //         case 6: handleViewAccount(); break;
-    //         case 7: handleViewTransactions(); break;
-    //         case 8: System.out.println("Thank you! Goodbye."); return;
-    //         default: System.out.println("Invalid choice. Please enter 1-8.");
-    //       }
-    //     } catch (Exception e) {
-    //       System.out.println("ERROR: " + e.getMessage());
-    //     }
-    //   }
-    // ============================================================
-    // TODO: implement start() menu loop
     public void start() {
-        // TODO: Step 3 - implement start() menu loop
+        while (true) {
+            if (!scanner.hasNextLine()) {
+                System.out.println("Input closed. Goodbye.");
+                return;
+            }
+
+            displayMainMenu();
+            int choice;
+            try {
+                choice = readInt("Enter your choice: ");
+                switch (choice) {
+                    case 1:
+                        handleOpenAccount();
+                        break;
+                    case 2:
+                        handleDeposit();
+                        break;
+                    case 3:
+                        handleWithdraw();
+                        break;
+                    case 4:
+                        handleTransfer();
+                        break;
+                    case 5:
+                        handleCloseAccount();
+                        break;
+                    case 6:
+                        handleViewAccount();
+                        break;
+                    case 7:
+                        handleViewTransactions();
+                        break;
+                    case 8:
+                        System.out.println("Thank you! Goodbye.");
+                        return;
+                    default:
+                        System.out.println("Invalid choice. Please enter 1-8.");
+                }
+            } catch (Exception e) {
+                System.out.println("ERROR: " + e.getMessage());
+                if (!scanner.hasNextLine()) {
+                    return;
+                }
+            }
+            System.out.println();
+        }
     }
 
-    // ============================================================
-    // 📝 STEP 4: Implement displayMainMenu()
-    // ============================================================
-    // TODO: print formatted main menu options
     private void displayMainMenu() {
-        // TODO: Step 4 - print formatted main menu options
+        System.out.println("========================================");
+        System.out.println("       GLOBAL DIGITAL BANK");
+        System.out.println("========================================");
+        System.out.println("1. Open Account");
+        System.out.println("2. Deposit");
+        System.out.println("3. Withdraw");
+        System.out.println("4. Transfer");
+        System.out.println("5. Close Account");
+        System.out.println("6. View Account Details");
+        System.out.println("7. View Transaction History");
+        System.out.println("8. Exit");
+        System.out.println("========================================");
     }
 
-    // ============================================================
-    // 📝 STEP 5: Implement handleOpenAccount()
-    //
-    // INSTRUCTIONS:
-    //   1. String type = readString("Account Type (Savings/Current/FixedDeposit/Salary): ")
-    //   2. String name = readString("Name: ")
-    //   3. int age = readInt("Age: ")
-    //   4. double amount = readDouble("Initial Balance: ")
-    //   5. IAccount acc = service.openAccount(type, name, age, amount)
-    //   6. System.out.println("SUCCESS: " + acc.getAccountInfo())
-    //   7. int pin = readInt("Set 4-digit PIN: ")
-    //   8. acc.setPin(pin)
-    // ============================================================
-    // TODO: implement account opening interaction
     private void handleOpenAccount() throws Exception {
-        // TODO: Step 5 - implement account opening interaction
+        System.out.println("--- Open Account ---");
+        String type = readString("Account Type (Savings/Current/FixedDeposit/Salary): ");
+        String name = readString("Name: ");
+        int age = readInt("Age: ");
+        double amount = readDouble("Initial Balance: ");
+
+        IAccount account = service.openAccount(type, name, age, amount);
+        System.out.println("SUCCESS: " + account.getAccountInfo());
+
+        int pin = readInt("Set 4-digit PIN: ");
+        account.setPin(pin);
+        System.out.println("PIN set successfully.");
     }
 
-    // ============================================================
-    // 📝 STEP 6: Implement handleDeposit()
-    //
-    // INSTRUCTIONS:
-    //   1. int accNo = readInt("Account Number: ")
-    //   2. double amount = readDouble("Amount to deposit: ")
-    //   3. Transaction txn = service.deposit(accNo, amount)
-    //   4. Print success + new balance
-    // ============================================================
-    // TODO: implement deposit interaction
     private void handleDeposit() throws Exception {
-        // TODO: Step 6 - implement deposit interaction
+        System.out.println("--- Deposit ---");
+        int accountNumber = readInt("Account Number: ");
+        double amount = readDouble("Amount to deposit: ");
+        Transaction transaction = service.deposit(accountNumber, amount);
+        System.out.println("SUCCESS: " + transaction);
+        System.out.println("New balance: Rs. " + transaction.getBalanceAfter());
     }
 
-    // ============================================================
-    // 📝 STEP 7: Implement handleWithdraw()
-    //
-    // INSTRUCTIONS:
-    //   1. int accNo = readInt("Account Number: ")
-    //   2. double amount = readDouble("Amount to withdraw: ")
-    //   3. int pin = readInt("PIN: ")
-    //   4. Transaction txn = service.withdraw(accNo, amount, pin)
-    //   5. Print success + new balance
-    // ============================================================
-    // TODO: implement withdrawal interaction
     private void handleWithdraw() throws Exception {
-        // TODO: Step 7 - implement withdrawal interaction
+        System.out.println("--- Withdraw ---");
+        int accountNumber = readInt("Account Number: ");
+        double amount = readDouble("Amount to withdraw: ");
+        int pin = readInt("PIN: ");
+        Transaction transaction = service.withdraw(accountNumber, amount, pin);
+        System.out.println("SUCCESS: " + transaction);
+        System.out.println("New balance: Rs. " + transaction.getBalanceAfter());
     }
 
-    // ============================================================
-    // 📝 STEP 8: Implement handleTransfer()
-    //
-    // INSTRUCTIONS:
-    //   1. int fromAcc = readInt("From Account: ")
-    //   2. int toAcc = readInt("To Account: ")
-    //   3. double amount = readDouble("Amount: ")
-    //   4. int pin = readInt("PIN: ")
-    //   5. Transaction txn = service.transfer(fromAcc, toAcc, amount, pin)
-    //   6. Print success message
-    // ============================================================
-    // TODO: implement transfer interaction
     private void handleTransfer() throws Exception {
-        // TODO: Step 8 - implement transfer interaction
+        System.out.println("--- Transfer ---");
+        int fromAccount = readInt("From Account: ");
+        int toAccount = readInt("To Account: ");
+        double amount = readDouble("Amount: ");
+        int pin = readInt("PIN: ");
+        Transaction transaction = service.transfer(fromAccount, toAccount, amount, pin);
+        System.out.println("SUCCESS: " + transaction);
     }
 
-    // ============================================================
-    // 📝 STEP 9: Implement handleCloseAccount()
-    //
-    // INSTRUCTIONS:
-    //   1. int accNo = readInt("Account Number: ")
-    //   2. int pin = readInt("PIN: ")
-    //   3. service.closeAccount(accNo, pin)
-    //   4. Print success message
-    // ============================================================
-    // TODO: implement close account interaction
     private void handleCloseAccount() throws Exception {
-        // TODO: Step 9 - implement close account interaction
+        System.out.println("--- Close Account ---");
+        int accountNumber = readInt("Account Number: ");
+        int pin = readInt("PIN: ");
+        service.closeAccount(accountNumber, pin);
+        System.out.println("SUCCESS: Account #" + accountNumber + " has been closed.");
     }
 
-    // ============================================================
-    // 📝 STEP 10: Implement handleViewAccount()
-    //
-    // INSTRUCTIONS:
-    //   1. int accNo = readInt("Account Number: ")
-    //   2. IAccount acc = service.getAccount(accNo)
-    //   3. If null -> "Account not found: " + accNo
-    //   4. Else -> print acc.getAccountInfo()
-    // ============================================================
-    // TODO: implement view account details
     private void handleViewAccount() {
-        // TODO: Step 10 - implement view account details
+        System.out.println("--- View Account ---");
+        int accountNumber = readInt("Account Number: ");
+        IAccount account = service.getAccount(accountNumber);
+        if (account == null) {
+            System.out.println("Account not found: " + accountNumber);
+        } else {
+            System.out.println(account.getAccountInfo());
+        }
     }
 
-    // ============================================================
-    // 📝 STEP 11: Implement handleViewTransactions()
-    //
-    // INSTRUCTIONS:
-    //   1. List<TransactionCommand> history = service.getTransactionHistory()
-    //   2. If empty -> "No transactions logged."
-    //   3. Else print each with index
-    // ============================================================
-    // TODO: implement view transaction history
     private void handleViewTransactions() {
-        // TODO: Step 11 - implement view transaction history
+        System.out.println("--- Transaction History ---");
+        List<TransactionCommand> history = service.getTransactionHistory();
+        if (history.isEmpty()) {
+            System.out.println("No transactions logged.");
+            return;
+        }
+
+        for (int i = 0; i < history.size(); i++) {
+            Transaction transaction = history.get(i).getTransaction();
+            System.out.println("[" + (i + 1) + "] "
+                    + (transaction != null ? transaction : "Transaction completed (details unavailable)"));
+        }
     }
 
-    // ============================================================
-    // 📝 STEP 12: Implement readInt(String prompt)
-    // ============================================================
-    // TODO: implement robust integer reader
     private int readInt(String prompt) {
-        // TODO: Step 12 - implement robust integer reader
-        return 0;
+        while (true) {
+            String value = readString(prompt);
+            try {
+                return Integer.parseInt(value);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a whole number.");
+            }
+        }
     }
 
-    // ============================================================
-    // 📝 STEP 13: Implement readDouble(String prompt)
-    // ============================================================
-    // TODO: implement robust double reader
     private double readDouble(String prompt) {
-        // TODO: Step 13 - implement robust double reader
-        return 0.0;
+        while (true) {
+            String value = readString(prompt);
+            try {
+                double number = Double.parseDouble(value);
+                if (!Double.isFinite(number)) {
+                    System.out.println("Invalid input. Please enter a finite number.");
+                    continue;
+                }
+                return number;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a number.");
+            }
+        }
     }
 
-    // ============================================================
-    // 📝 STEP 14: Implement readString(String prompt)
-    // ============================================================
-    // TODO: implement string reader
     private String readString(String prompt) {
-        // TODO: Step 14 - implement string reader
-        return "";
+        System.out.print(prompt);
+        if (!scanner.hasNextLine()) {
+            throw new NoSuchElementException("No more input available.");
+        }
+        return scanner.nextLine().trim();
     }
 }
