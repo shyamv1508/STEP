@@ -1,8 +1,9 @@
 package com.gdb.domain;
 
 import com.gdb.exceptions.*;
+import java.time.LocalDate;
 
-// TODO: Step 2 - Make AbstractAccount formally implement the IAccount interface (add "implements IAccount").
+// Base class shared by every account type.
 public abstract class AbstractAccount implements IAccount {
     protected String accountNumber;
     protected String name;
@@ -11,6 +12,10 @@ public abstract class AbstractAccount implements IAccount {
     protected String accountType;
     protected String status;
     protected String pin;
+
+    private static final double DAILY_TRANSFER_LIMIT = 50000.0;
+    private double dailyTransferTotal = 0.0;
+    private LocalDate transferDate = LocalDate.now();
 
     public AbstractAccount(String accountNumber, String name, int age, double balance, String accountType, String status, String pin) {
         if (age < 18) throw new IllegalArgumentException("Customer age must be 18 or above");
@@ -43,12 +48,60 @@ public abstract class AbstractAccount implements IAccount {
 
     public void withdraw(double amount, String enteredPin) throws AccountException {
         if (!validatePin(enteredPin)) throw new InvalidPinException("Invalid PIN entered");
-        if (!"ACTIVE".equalsIgnoreCase(this.status)) throw new InactiveAccountException("Account is not active");
+        if (!isActive()) throw new InactiveAccountException("Account is not active");
         if (amount <= 0) throw new InvalidAmountException("Withdrawal amount must be positive");
         processDebit(amount);
     }
 
     public abstract void processDebit(double amount) throws AccountException;
+
+    public boolean isActive() {
+        return "ACTIVE".equalsIgnoreCase(status);
+    }
+
+    public boolean verifyPin(int enteredPin) {
+        return validatePin(String.valueOf(enteredPin));
+    }
+
+    // Savings accounts must retain their configured minimum balance.
+    public boolean canWithdraw(double amount) {
+        if (amount <= 0) return false;
+        double minimumBalance = this instanceof SavingsAccount
+                ? ((SavingsAccount) this).getMinBalance() : 0.0;
+        return balance - amount >= minimumBalance;
+    }
+
+    public void resetDailyTransferIfNeeded() {
+        LocalDate today = LocalDate.now();
+        if (!today.equals(transferDate)) {
+            transferDate = today;
+            dailyTransferTotal = 0.0;
+        }
+    }
+
+    public double getDailyTransferLimit() {
+        return DAILY_TRANSFER_LIMIT;
+    }
+
+    public boolean canTransfer(double amount) {
+        resetDailyTransferIfNeeded();
+        return amount > 0 && dailyTransferTotal + amount <= getDailyTransferLimit();
+    }
+
+    public double getDailyTransferTotal() {
+        resetDailyTransferIfNeeded();
+        return dailyTransferTotal;
+    }
+
+    public double getRemainingDailyTransferLimit() {
+        resetDailyTransferIfNeeded();
+        return Math.max(0.0, getDailyTransferLimit() - dailyTransferTotal);
+    }
+
+    public void updateDailyTransferTotal(double amount) {
+        resetDailyTransferIfNeeded();
+        dailyTransferTotal += amount;
+    }
 
     public void displayAccountInfo() {
         System.out.println("Account Number: " + accountNumber);
