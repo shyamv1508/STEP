@@ -2,22 +2,47 @@ package com.gdb.domain;
 
 import com.gdb.exceptions.*;
 
-// TODO: Step 1 - Declare the contract every bank account must follow (method signatures only, no bodies):
-//   - Getters for account number, customer name, balance, account type and status
-//     (you may also expose getAge(), validatePin(String) and changePin(String, String)).
-//   - deposit(double amount), declaring InvalidAmountException.
-//   - withdraw(double amount, String enteredPin), declaring AccountException.
-//   - displayAccountInfo(), returning void.
-//   Tip: every signature must match the method that already exists in AbstractAccount.
+/**
+ * Enterprise Interface Contract defining standard public capabilities for all bank account implementations.
+ * Integrates dynamic rules engine lookup based on customer account tenure.
+ */
 public interface IAccount {
-    String getAccountNumber();
-    String getName();
+
+    void deposit(double amount) throws InactiveAccountException, InvalidAmountException;
+
+    void withdraw(double amount, int pin) throws InactiveAccountException, InvalidPinException, InvalidAmountException, InsufficientBalanceException;
+
     double getBalance();
+
+    int getAccountNumber();
+
+    String getAccountHolderName();
+
     String getAccountType();
-    String getStatus();
 
-    void deposit(double amount) throws InvalidAmountException;
-    void withdraw(double amount, String enteredPin) throws AccountException;
-    void displayAccountInfo();
+    String getOpeningDate();
 
+    boolean isActive();
+
+    double getMinimumBalance();
+
+    double getInterestRate();
+
+    boolean canWithdraw(double amount);
+
+    void setPin(int pin) throws InvalidPinException;
+
+    boolean verifyPin(int pin);
+
+    boolean hasPin();
+
+    void closeAccount() throws InactiveAccountException;
+
+    void reopenAccount() throws InactiveAccountException;
+
+    String getAccountInfo();
+
+    int getTenureYears();
+
+    void setTenureYears(int tenureYears);
 }
