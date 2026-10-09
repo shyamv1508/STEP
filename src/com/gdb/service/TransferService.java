@@ -2,6 +2,7 @@ package com.gdb.service;
 
 import com.gdb.domain.*;
 import com.gdb.exceptions.*;
+import java.time.LocalDateTime;
 
 public class TransferService {
 
@@ -32,27 +33,20 @@ public class TransferService {
         source.updateDailyTransferTotal(amount);
     }
 
-    // ============================================================
-    // 📝 STEP 9: Return Transaction From transfer
-    //
-    // INSTRUCTIONS:
-    //   1. Call existing transfer(from, to, amount, pin).
-    //   2. Build and return a Transaction with:
-    //      - ID: Transaction.generateId()
-    //      - timestamp: LocalDateTime.now()
-    //      - accountNumber: from.getAccountNumber()
-    //      - type: TransactionType.TRANSFER
-    //      - amount: amount
-    //      - balanceAfter: from.getBalance()
-    //      - status: "SUCCESS"
-    //      - description: "Transfer of Rs. " + amount + " to Account #" + to.getAccountNumber()
-    //      - fromAccount: from.getAccountNumber()
-    //      - toAccount: to.getAccountNumber()
-    // ============================================================
-    // TODO: perform transfer and return Transaction record
-    public Transaction transferWithTransaction(IAccount from, IAccount to, 
+    public Transaction transferWithTransaction(IAccount from, IAccount to,
                                                double amount, int pin) throws AccountException {
-        // Trainee: call transfer(from, to, amount, pin), then build and return Transaction
-        return null;
+        transfer(from, to, amount, pin);
+        return new Transaction(
+                Transaction.generateId(),
+                LocalDateTime.now(),
+                from.getAccountNumber(),
+                TransactionType.TRANSFER,
+                amount,
+                from.getBalance(),
+                "SUCCESS",
+                "Transfer of Rs. " + amount + " to Account #" + to.getAccountNumber(),
+                from.getAccountNumber(),
+                to.getAccountNumber()
+        );
     }
 }
