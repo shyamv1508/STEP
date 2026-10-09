@@ -18,11 +18,6 @@ public class AccountUI {
 
     public void start() {
         while (true) {
-            if (!scanner.hasNextLine()) {
-                System.out.println("Input closed. Goodbye.");
-                return;
-            }
-
             displayMainMenu();
             int choice;
             try {
