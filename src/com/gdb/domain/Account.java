@@ -158,29 +158,15 @@ public abstract class Account implements IAccount {
         );
     }
 
-    // ============================================================
-    // 📝 STEP 7: Add depositWithTransaction
-    //
-    // INSTRUCTIONS:
-    //   1. Call deposit(amount) to perform standard deposit logic and validation.
-    //   2. Build and return a Transaction object with type DEPOSIT using buildTransaction().
-    // ============================================================
-    // TODO: perform deposit and return Transaction record
     public Transaction depositWithTransaction(double amount) throws AccountException {
-        // Trainee: call deposit(amount), then build and return Transaction
-        return null;
+        deposit(amount);
+        return buildTransaction(TransactionType.DEPOSIT, amount, 0, 0,
+                "Deposit of Rs. " + amount);
     }
 
-    // ============================================================
-    // 📝 STEP 8: Add withdrawWithTransaction
-    //
-    // INSTRUCTIONS:
-    //   1. Call withdraw(amount, pin) to perform standard withdrawal logic and validation.
-    //   2. Build and return a Transaction object with type WITHDRAW using buildTransaction().
-    // ============================================================
-    // TODO: perform withdraw and return Transaction record
     public Transaction withdrawWithTransaction(double amount, int pin) throws AccountException {
-        // Trainee: call withdraw(amount, pin), then build and return Transaction
-        return null;
+        withdraw(amount, pin);
+        return buildTransaction(TransactionType.WITHDRAW, amount, 0, 0,
+                "Withdrawal of Rs. " + amount);
     }
 }
