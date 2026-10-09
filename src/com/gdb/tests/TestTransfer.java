@@ -14,11 +14,11 @@ public class TestTransfer {
 
         // STEP 9: Create two NEW Savings accounts with the same PIN.
         IAccount acc1 = AccountFactory.createAccount(
-                "SAVINGS", "1001", "Rajesh Sharma", 30, 100000,
-                "ACTIVE", "1234", 0);
+                "SAVINGS", 1001, "Rajesh Sharma", 30, 100000);
         IAccount acc2 = AccountFactory.createAccount(
-                "SAVINGS", "1002", "Priya Patel", 28, 20000,
-                "ACTIVE", "1234", 0);
+                "SAVINGS", 1002, "Priya Patel", 28, 20000);
+        acc1.setPin(1234);
+        acc2.setPin(1234);
 
         // STEP 10: Successful transfer.
         svc.transfer(acc1, acc2, 5000, 1234);
@@ -35,7 +35,7 @@ public class TestTransfer {
         }
 
         // STEP 12: Transfer repeatedly until the daily limit is reached.
-        AbstractAccount source = (AbstractAccount) acc1;
+        Account source = (Account) acc1;
         System.out.println("Daily transfer limit: Rs. " + source.getDailyTransferLimit());
         for (int i = 1; i <= 3; i++) {
             try {
