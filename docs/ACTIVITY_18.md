@@ -1,4 +1,4 @@
-# Activity 18: Bridge Pattern (File + DB)
+# ACTIVITY 18: Bridge Pattern (File + DB)
 
 ## Objective
 Decouple the high-level `TransactionLogger` abstraction from its pluggable `LogDestination` storage backends using the **Bridge Design Pattern**. Support multiple backends — File, In-Memory DB, and Simulated Database — selectable and switchable at runtime.

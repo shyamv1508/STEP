@@ -7,9 +7,6 @@ import java.util.*;
 public class TransactionLog {
     private static final String FILE_PATH = "data/transactions.ser";
 
-    // ============================================================
-    // Helper: AppendableObjectOutputStream (COMPLETE — non-placeholder)
-    // ============================================================
     private static class AppendableObjectOutputStream extends ObjectOutputStream {
         public AppendableObjectOutputStream(OutputStream out) throws IOException {
             super(out);
@@ -20,91 +17,45 @@ public class TransactionLog {
         }
     }
 
-    // ============================================================
-    // 📝 STEP 7: Implement log(TransactionCommand cmd)
-    //
-    // INSTRUCTIONS:
-    //   1. Create parent directory (data/) if missing.
-    //   2. If file does not exist or is empty (length == 0), use new ObjectOutputStream(...).
-    //   3. If file already has data, use new AppendableObjectOutputStream(new FileOutputStream(file, true)).
-    //   4. Write cmd object, flush, and close stream.
-    // ============================================================
-    //  log transaction command to binary file
-
     public synchronized void log(TransactionCommand cmd) throws IOException {
         File file = new File(FILE_PATH);
-
-        File parent = file.getParentFile();
-        if (parent != null) {
-            parent.mkdirs();
+        if (file.getParentFile() != null && !file.getParentFile().exists()) {
+            file.getParentFile().mkdirs();
         }
-
-        ObjectOutputStream out;
-
-        if (!file.exists() || file.length() == 0) {
-            out = new ObjectOutputStream(new FileOutputStream(file));
-        } else {
-            out = new AppendableObjectOutputStream(
-                    new FileOutputStream(file, true)
-            );
+        boolean isNewOrEmpty = !file.exists() || file.length() == 0;
+        try (ObjectOutputStream out = isNewOrEmpty
+                ? new ObjectOutputStream(new FileOutputStream(file))
+                : new AppendableObjectOutputStream(new FileOutputStream(file, true))) {
+            out.writeObject(cmd);
+            out.flush();
         }
-
-        out.writeObject(cmd);
-        out.flush();
-        out.close();
     }
 
-
-    // ============================================================
-    // 📝 STEP 8: Implement readAll()
-    //
-    // INSTRUCTIONS:
-    //   1. If file does not exist, return empty List.
-    //   2. Open ObjectInputStream and loop calling readObject() until EOFException.
-    //   3. Collect and return List<TransactionCommand>.
-    // ============================================================
-    // read and return all logged transaction commands
-
-    public synchronized List<TransactionCommand> readAll()
-            throws IOException, ClassNotFoundException {
-
-        List<TransactionCommand> commands = new ArrayList<>();
+    public synchronized List<TransactionCommand> readAll() throws IOException, ClassNotFoundException {
+        List<TransactionCommand> list = new ArrayList<>();
         File file = new File(FILE_PATH);
-
         if (!file.exists() || file.length() == 0) {
-            return commands;
+            return list;
         }
-
-        try (ObjectInputStream in =
-                     new ObjectInputStream(new FileInputStream(file))) {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
             while (true) {
                 try {
-                    TransactionCommand cmd =
-                            (TransactionCommand) in.readObject();
-                    commands.add(cmd);
+                    Object obj = in.readObject();
+                    if (obj instanceof TransactionCommand) {
+                        list.add((TransactionCommand) obj);
+                    }
                 } catch (EOFException e) {
                     break;
                 }
             }
         }
-
-        return commands;
+        return list;
     }
 
-
-    // ============================================================
-    // 📝 STEP 9: Implement clear()
-    //
-    // INSTRUCTIONS:
-    //   Delete the log file if it exists.
-    // ============================================================
-    //  delete log file to reset history
     public synchronized void clear() {
-        //  Step 9 - delete log file if it exists
         File file = new File(FILE_PATH);
         if (file.exists()) {
             file.delete();
         }
-
     }
 }
