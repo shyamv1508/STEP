@@ -1,10 +1,6 @@
 package com.gdb.domain;
 
 import java.io.InputStream;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -32,19 +28,6 @@ public class AccountRulesPropertiesLoader {
         }
         if (input == null) {
             input = Thread.currentThread().getContextClassLoader().getResourceAsStream("config/rules/" + accountType.toLowerCase() + ".properties");
-        }
-        // IntelliJ may run the program without copying resources into the output folder.
-        // In that case, load the properties directly from the project resources directory.
-        if (input == null) {
-            Path filePath = Paths.get("src", "main", "resources", "config", "rules",
-                    accountType.toLowerCase() + ".properties");
-            try {
-                if (Files.isRegularFile(filePath)) {
-                    input = Files.newInputStream(filePath);
-                }
-            } catch (IOException ignored) {
-                // Fall back to the default rules below.
-            }
         }
 
         try {
