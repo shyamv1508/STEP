@@ -29,11 +29,31 @@ public class TransactionLog {
     //   3. If file already has data, use new AppendableObjectOutputStream(new FileOutputStream(file, true)).
     //   4. Write cmd object, flush, and close stream.
     // ============================================================
-    // TODO: log transaction command to binary file
-    public synchronized void log(TransactionCommand cmd) throws IOException {
-        // TODO: Step 7 - implement binary serialization logging
+    //  log transaction command to binary file
 
+    public synchronized void log(TransactionCommand cmd) throws IOException {
+        File file = new File(FILE_PATH);
+
+        File parent = file.getParentFile();
+        if (parent != null) {
+            parent.mkdirs();
+        }
+
+        ObjectOutputStream out;
+
+        if (!file.exists() || file.length() == 0) {
+            out = new ObjectOutputStream(new FileOutputStream(file));
+        } else {
+            out = new AppendableObjectOutputStream(
+                    new FileOutputStream(file, true)
+            );
+        }
+
+        out.writeObject(cmd);
+        out.flush();
+        out.close();
     }
+
 
     // ============================================================
     // 📝 STEP 8: Implement readAll()
@@ -46,7 +66,14 @@ public class TransactionLog {
     // TODO: read and return all logged transaction commands
     public synchronized List<TransactionCommand> readAll() throws IOException, ClassNotFoundException {
         // TODO: Step 8 - deserialize all transaction commands from file
-        return new ArrayList<>();
+        File file = new File(FILE_PATH);
+        if (!file.exists() || file.length() == 0) {
+            return new ArrayList<>();
+        }
+        ObjectInputStream in;
+        in = new ObjectInputStream(new FileInputStream(file));
+
+        return (List<TransactionCommand>) in.readObject();
     }
 
     // ============================================================
