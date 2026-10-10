@@ -16,7 +16,7 @@ public class WithdrawCommand implements TransactionCommand {
     private int pin;
     private Transaction transaction;
     // ============================================================
-    // TODO: declare account, amount, pin, and transaction fields
+    //  declare account, amount, pin, and transaction fields
 
     // ============================================================
     // 📝 STEP 4: Write Constructor
@@ -24,9 +24,9 @@ public class WithdrawCommand implements TransactionCommand {
     // INSTRUCTIONS:
     //   Accept (IAccount account, double amount, int pin); store all.
     // ============================================================
-    // TODO: implement constructor
+    //  implement constructor
     public WithdrawCommand(IAccount account, double amount, int pin) {
-        // TODO: Step 4 - implement constructor
+        // Step 4 - implement constructor
         this.account = account;
         this.amount = amount;
         this.pin = pin;
@@ -39,10 +39,10 @@ public class WithdrawCommand implements TransactionCommand {
     //   1. Call account.withdrawWithTransaction(amount, pin).
     //   2. Store returned Transaction in this.transaction.
     // ============================================================
-    // TODO: implement execute() method
+    // implement execute() method
     @Override
     public void execute() throws Exception {
-        // TODO: Step 5 - implement execute()
+        //  Step 5 - implement execute()
         this.transaction = ((Account) account).withdrawWithTransaction(amount, pin);
 
     }
@@ -53,10 +53,10 @@ public class WithdrawCommand implements TransactionCommand {
     // INSTRUCTIONS:
     //   Return this.transaction.
     // ============================================================
-    // TODO: return this.transaction
+    // return this.transaction
     @Override
     public Transaction getTransaction() {
-        // TODO: Step 6 - return this.transaction
+        //  Step 6 - return this.transaction
         return this.transaction;
     }
 }

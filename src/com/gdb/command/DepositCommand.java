@@ -15,7 +15,7 @@ public class DepositCommand implements TransactionCommand {
     //   2. private double amount;
     //   3. private Transaction transaction;
     // ============================================================
-    // TODO: declare account, amount, and transaction fields
+    //  declare account, amount, and transaction fields
     private IAccount account;
     private double amount;
     private Transaction transaction;
@@ -26,9 +26,9 @@ public class DepositCommand implements TransactionCommand {
     // INSTRUCTIONS:
     //   Accept (IAccount account, double amount); store both in fields.
     // ============================================================
-    // TODO: implement constructor
+    // implement constructor
     public DepositCommand(IAccount account, double amount) {
-        // TODO: Step 4 - implement constructor
+        // Step 4 - implement constructor
         this.account = account;
         this.amount = amount;
     }
@@ -40,10 +40,10 @@ public class DepositCommand implements TransactionCommand {
     //   1. Call account.depositWithTransaction(amount) (casting to Account if needed).
     //   2. Store returned Transaction in this.transaction.
     // ============================================================
-    // TODO: implement execute() method
+    //  implement execute() method
     @Override
     public void execute() throws Exception {
-        // TODO: Step 5 - implement execute()
+        // Step 5 - implement execute()
         this.transaction = ((Account) account).depositWithTransaction(amount);
     }
 
@@ -53,10 +53,10 @@ public class DepositCommand implements TransactionCommand {
     // INSTRUCTIONS:
     //   Return this.transaction.
     // ============================================================
-    // TODO: return this.transaction
+    // return this.transaction
     @Override
     public Transaction getTransaction() {
-        // TODO: Step 6 - return this.transaction
+        //  Step 6 - return this.transaction
         return this.transaction;
     }
 }
