@@ -63,18 +63,34 @@ public class TransactionLog {
     //   2. Open ObjectInputStream and loop calling readObject() until EOFException.
     //   3. Collect and return List<TransactionCommand>.
     // ============================================================
-    // TODO: read and return all logged transaction commands
-    public synchronized List<TransactionCommand> readAll() throws IOException, ClassNotFoundException {
-        // TODO: Step 8 - deserialize all transaction commands from file
-        File file = new File(FILE_PATH);
-        if (!file.exists() || file.length() == 0) {
-            return new ArrayList<>();
-        }
-        ObjectInputStream in;
-        in = new ObjectInputStream(new FileInputStream(file));
+    // read and return all logged transaction commands
 
-        return (List<TransactionCommand>) in.readObject();
+    public synchronized List<TransactionCommand> readAll()
+            throws IOException, ClassNotFoundException {
+
+        List<TransactionCommand> commands = new ArrayList<>();
+        File file = new File(FILE_PATH);
+
+        if (!file.exists() || file.length() == 0) {
+            return commands;
+        }
+
+        try (ObjectInputStream in =
+                     new ObjectInputStream(new FileInputStream(file))) {
+            while (true) {
+                try {
+                    TransactionCommand cmd =
+                            (TransactionCommand) in.readObject();
+                    commands.add(cmd);
+                } catch (EOFException e) {
+                    break;
+                }
+            }
+        }
+
+        return commands;
     }
+
 
     // ============================================================
     // 📝 STEP 9: Implement clear()
