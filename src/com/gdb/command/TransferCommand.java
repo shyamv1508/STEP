@@ -11,11 +11,11 @@ public class TransferCommand implements TransactionCommand {
     // 📝 STEP 3: Declare Fields
     //
     // INSTRUCTIONS:
-    //   1. private IAccount fromAccount;
-    //   2. private IAccount toAccount;
-    //   3. private double amount;
-    //   4. private int pin;
-    //   5. private Transaction transaction;
+    private IAccount fromAccount;
+    private IAccount toAccount;
+    private double amount;
+    private int pin;
+    private Transaction transaction;
     // ============================================================
     // TODO: declare fromAccount, toAccount, amount, pin, and transaction fields
 
@@ -28,6 +28,10 @@ public class TransferCommand implements TransactionCommand {
     // TODO: implement constructor
     public TransferCommand(IAccount from, IAccount to, double amount, int pin) {
         // TODO: Step 4 - implement constructor
+        this.fromAccount = from;
+        this.toAccount = to;
+        this.amount = amount;
+        this.pin = pin;
     }
 
     // ============================================================
@@ -41,6 +45,7 @@ public class TransferCommand implements TransactionCommand {
     @Override
     public void execute() throws Exception {
         // TODO: Step 5 - implement execute()
+        new TransferService().transferWithTransaction(fromAccount, toAccount, amount, pin);
     }
 
     // ============================================================
@@ -53,6 +58,6 @@ public class TransferCommand implements TransactionCommand {
     @Override
     public Transaction getTransaction() {
         // TODO: Step 6 - return this.transaction
-        return null;
+        return this.transaction;
     }
 }

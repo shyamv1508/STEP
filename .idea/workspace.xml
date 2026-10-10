@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ebc903e7-7ae5-4231-a8a2-38c06e82eb9b" name="Changes" comment="Activity 17">
+      <change beforePath="$PROJECT_DIR$/src/com/gdb/command/DepositCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/gdb/command/DepositCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/gdb/command/TransferCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/gdb/command/TransferCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/gdb/command/WithdrawCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/gdb/command/WithdrawCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/gdb/logging/TransactionLog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/gdb/logging/TransactionLog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/gdb/tests/TestCommandLogging.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/gdb/tests/TestCommandLogging.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="WEEK-10" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/shyamv1508/STEP.git",
+    "accountId": "3253c95f-4be9-47ae-9664-517e3aa4e512"
+  }
+}]]></component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0" />
+      <entry key="S2" value="1.0000000000000002" />
+      <entry key="S5" value="1.0000006199520854" />
+      <entry key="S10" value="1.0012090189048732" />
+      <entry key="S30" value="1.2529925499591188" />
+      <entry key="S60" value="2.1642414329044257" />
+      <entry key="M2" value="4.384070861962973" />
+      <entry key="M5" value="11.393799832799248" />
+      <entry key="M10" value="20.215546857991118" />
+      <entry key="M15" value="26.05877552349492" />
+      <entry key="M30" value="35.13889695349755" />
+      <entry key="H1" value="41.61493381305464" />
+      <entry key="H2" value="45.530750063768586" />
+      <entry key="H4" value="47.69070579162958" />
+      <entry key="D1" value="49.604242170120685" />
+      <entry key="W1" value="49.94318996830898" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="5.101209952072889E-86" />
+      <entry key="S2" value="6.453613260568876E-22" />
+      <entry key="S5" value="5.412227569370906E-9" />
+      <entry key="S10" value="1.3438212164105753E-4" />
+      <entry key="S30" value="0.16488524332084148" />
+      <entry key="S60" value="1.2154990909120933" />
+      <entry key="M2" value="3.7970357339205654" />
+      <entry key="M5" value="8.785622290383523" />
+      <entry key="M10" value="13.645085170513708" />
+      <entry key="M15" value="16.882100562667446" />
+      <entry key="M30" value="22.090427488088196" />
+      <entry key="H1" value="25.92308362405841" />
+      <entry key="H2" value="28.27966778326564" />
+      <entry key="H4" value="29.59056054900823" />
+      <entry key="D1" value="30.75789977940494" />
+      <entry key="W1" value="30.965233321974484" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="1.071336294535499E-36" />
+      <entry key="MS500" value="6.397129812201587E-8" />
+      <entry key="S2" value="0.01590363101259496" />
+      <entry key="S5" value="0.19080927806412673" />
+      <entry key="S10" value="0.4379379010059595" />
+      <entry key="S30" value="1.1553518620472993" />
+      <entry key="S60" value="3.192101427007374" />
+      <entry key="M2" value="8.030786464040858" />
+      <entry key="M5" value="20.072882619420117" />
+      <entry key="M10" value="33.78096434313465" />
+      <entry key="M15" value="42.875351023614215" />
+      <entry key="M30" value="57.18639147112023" />
+      <entry key="H1" value="67.51278242886151" />
+      <entry key="H2" value="73.7966397983589" />
+      <entry key="H4" value="77.27405438940559" />
+      <entry key="D1" value="80.36089202390771" />
+      <entry key="W1" value="80.90824351320596" />
+    </decayedShown>
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "KEY_CHAT_IN_TOOLWINDOW": "false",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "git-widget-placeholder": "WEEK-9",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.general"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Activity 17" />
+    <option name="LAST_COMMIT_MESSAGE" value="Activity 17" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

@@ -32,6 +32,7 @@ public class TransactionLog {
     // TODO: log transaction command to binary file
     public synchronized void log(TransactionCommand cmd) throws IOException {
         // TODO: Step 7 - implement binary serialization logging
+
     }
 
     // ============================================================
@@ -57,5 +58,6 @@ public class TransactionLog {
     // TODO: delete log file to reset history
     public synchronized void clear() {
         // TODO: Step 9 - delete log file if it exists
+
     }
 }

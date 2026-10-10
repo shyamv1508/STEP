@@ -11,10 +11,10 @@ public class WithdrawCommand implements TransactionCommand {
     // 📝 STEP 3: Declare Fields
     //
     // INSTRUCTIONS:
-    //   1. private IAccount account;
-    //   2. private double amount;
-    //   3. private int pin;
-    //   4. private Transaction transaction;
+    private IAccount account;
+    private double amount;
+    private int pin;
+    private Transaction transaction;
     // ============================================================
     // TODO: declare account, amount, pin, and transaction fields
 
@@ -27,6 +27,9 @@ public class WithdrawCommand implements TransactionCommand {
     // TODO: implement constructor
     public WithdrawCommand(IAccount account, double amount, int pin) {
         // TODO: Step 4 - implement constructor
+        this.account = account;
+        this.amount = amount;
+        this.pin = pin;
     }
 
     // ============================================================
@@ -40,6 +43,8 @@ public class WithdrawCommand implements TransactionCommand {
     @Override
     public void execute() throws Exception {
         // TODO: Step 5 - implement execute()
+        this.transaction = account.withdrawWithTransaction(amount, pin);
+
     }
 
     // ============================================================
@@ -52,6 +57,6 @@ public class WithdrawCommand implements TransactionCommand {
     @Override
     public Transaction getTransaction() {
         // TODO: Step 6 - return this.transaction
-        return null;
+        return this.transaction;
     }
 }

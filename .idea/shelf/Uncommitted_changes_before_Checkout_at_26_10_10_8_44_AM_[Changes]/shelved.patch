@@ -1,0 +1,92 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"PropertiesComponent\">{}</component>\r\n</project>
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision b336b80457228a9e9d80b9b15284ff8295454545)
++++ b/.idea/workspace.xml	(date 1791601954655)
+@@ -1,4 +1,81 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="PropertiesComponent">{}</component>
++  <component name="AutoImportSettings">
++    <option name="autoReloadType" value="SELECTIVE" />
++  </component>
++  <component name="ChangeListManager">
++    <list default="true" id="ebc903e7-7ae5-4231-a8a2-38c06e82eb9b" name="Changes" comment="" />
++    <option name="SHOW_DIALOG" value="false" />
++    <option name="HIGHLIGHT_CONFLICTS" value="true" />
++    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
++    <option name="LAST_RESOLUTION" value="IGNORE" />
++  </component>
++  <component name="NextEditCompletionFeaturesState">
++    <decayedCancelled>
++      <entry key="MS100" value="1.00005132426343" />
++      <entry key="MS500" value="1.145895122963158" />
++      <entry key="S2" value="1.9015460496669012" />
++      <entry key="S5" value="2.4312995005746982" />
++      <entry key="S10" value="2.687329945805444" />
++      <entry key="S30" value="2.8886775616235703" />
++      <entry key="S60" value="2.9489020937048482" />
++      <entry key="M2" value="3.1370469930709395" />
++      <entry key="M5" value="4.267111619990644" />
++      <entry key="M10" value="5.522412996676925" />
++      <entry key="M15" value="6.1695034044140575" />
++      <entry key="M30" value="6.98133594753537" />
++      <entry key="H1" value="7.461792342990964" />
++      <entry key="H2" value="7.723260873283948" />
++      <entry key="H4" value="7.859666934487213" />
++      <entry key="D1" value="7.9763336785598575" />
++      <entry key="W1" value="7.996612238517259" />
++    </decayedCancelled>
++    <decayedSelected>
++      <entry key="MS100" value="0.0" />
++      <entry key="MS500" value="0.0" />
++      <entry key="S2" value="0.0" />
++      <entry key="S5" value="0.0" />
++      <entry key="S10" value="0.0" />
++      <entry key="S30" value="0.0" />
++      <entry key="S60" value="0.0" />
++      <entry key="M2" value="0.0" />
++      <entry key="M5" value="0.0" />
++      <entry key="M10" value="0.0" />
++      <entry key="M15" value="0.0" />
++      <entry key="M30" value="0.0" />
++      <entry key="H1" value="0.0" />
++      <entry key="H2" value="0.0" />
++      <entry key="H4" value="0.0" />
++      <entry key="D1" value="0.0" />
++      <entry key="W1" value="0.0" />
++    </decayedSelected>
++    <decayedShown>
++      <entry key="MS100" value="0.9201879009142608" />
++      <entry key="MS500" value="1.0383808850165068" />
++      <entry key="S2" value="1.7532733868808252" />
++      <entry key="S5" value="2.34547769687919" />
++      <entry key="S10" value="2.638720727911137" />
++      <entry key="S30" value="2.8710626879618726" />
++      <entry key="S60" value="2.9398728186686442" />
++      <entry key="M2" value="3.1319787867052407" />
++      <entry key="M5" value="4.2636843119660774" />
++      <entry key="M10" value="5.51992339895775" />
++      <entry key="M15" value="6.167577567178955" />
++      <entry key="M30" value="6.980206313762782" />
++      <entry key="H1" value="7.461178241694772" />
++      <entry key="H2" value="7.722940418901039" />
++      <entry key="H4" value="7.859503211881519" />
++      <entry key="D1" value="7.976305893272328" />
++      <entry key="W1" value="7.996608256821102" />
++    </decayedShown>
++  </component>
++  <component name="PropertiesComponent"><![CDATA[{
++  "keyToString": {
++    "git-widget-placeholder": "WEEK-9",
++    "node.js.selected.package.tslint": "(autodetect)"
++  }
++}]]></component>
++  <component name="TaskManager">
++    <servers />
++  </component>
+ </project>
+\ No newline at end of file

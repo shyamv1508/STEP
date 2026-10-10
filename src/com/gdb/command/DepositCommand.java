@@ -16,6 +16,9 @@ public class DepositCommand implements TransactionCommand {
     //   3. private Transaction transaction;
     // ============================================================
     // TODO: declare account, amount, and transaction fields
+    private IAccount account;
+    private double amount;
+    private Transaction transaction;
 
     // ============================================================
     // 📝 STEP 4: Write Constructor
@@ -26,6 +29,8 @@ public class DepositCommand implements TransactionCommand {
     // TODO: implement constructor
     public DepositCommand(IAccount account, double amount) {
         // TODO: Step 4 - implement constructor
+        this.account = account;
+        this.amount = amount;
     }
 
     // ============================================================
@@ -39,6 +44,7 @@ public class DepositCommand implements TransactionCommand {
     @Override
     public void execute() throws Exception {
         // TODO: Step 5 - implement execute()
+        this.transaction = Account.depositWithTransaction(amount);
     }
 
     // ============================================================
@@ -51,6 +57,6 @@ public class DepositCommand implements TransactionCommand {
     @Override
     public Transaction getTransaction() {
         // TODO: Step 6 - return this.transaction
-        return null;
+        return this.transaction;
     }
 }
