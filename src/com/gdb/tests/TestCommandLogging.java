@@ -67,7 +67,7 @@ public class TestCommandLogging {
         // ============================================================
         //  read all logged commands and display audit trail
         List<TransactionCommand> history = log.readAll();
-        System.out.println(history);
+        System.out.println("Total commands: " + history.size());
         for (TransactionCommand cmd : history) {
             System.out.println(cmd.getTransaction());
         }
@@ -80,6 +80,13 @@ public class TestCommandLogging {
         List<TransactionCommand> persisted = freshLog.readAll();
         //   3. Verify persisted.size() matches previous count.
         // ============================================================
-        // TODO: verify persistence from independent log reader instance
+        //  verify persistence from independent log reader instance
+        System.out.println("Persisted commands: " + persisted.size());
+
+        if (persisted.size() == history.size()) {
+            System.out.println("[PASS] File persistence verified!");
+        } else {
+            System.out.println("[FAIL] File persistence failed!");
+        }
     }
 }
