@@ -4,6 +4,7 @@ import com.gdb.domain.IAccount;
 import com.gdb.domain.Transaction;
 import com.gdb.command.TransactionCommand;
 import com.gdb.service.AccountService;
+import com.gdb.exceptions.AccountException;
 
 import java.util.*;
 
@@ -12,57 +13,35 @@ public class AccountUI {
     private final Scanner scanner;
 
     public AccountUI(AccountService service) {
-        this.service = Objects.requireNonNull(service, "AccountService cannot be null");
+        this.service = service;
         this.scanner = new Scanner(System.in);
     }
 
     public void start() {
         while (true) {
             displayMainMenu();
-            int choice;
+            int choice = readInt("Enter your choice: ");
             try {
-                choice = readInt("Enter your choice: ");
                 switch (choice) {
-                    case 1:
-                        handleOpenAccount();
-                        break;
-                    case 2:
-                        handleDeposit();
-                        break;
-                    case 3:
-                        handleWithdraw();
-                        break;
-                    case 4:
-                        handleTransfer();
-                        break;
-                    case 5:
-                        handleCloseAccount();
-                        break;
-                    case 6:
-                        handleViewAccount();
-                        break;
-                    case 7:
-                        handleViewTransactions();
-                        break;
-                    case 8:
-                        System.out.println("Thank you! Goodbye.");
-                        return;
-                    default:
-                        System.out.println("Invalid choice. Please enter 1-8.");
+                    case 1: handleOpenAccount(); break;
+                    case 2: handleDeposit(); break;
+                    case 3: handleWithdraw(); break;
+                    case 4: handleTransfer(); break;
+                    case 5: handleCloseAccount(); break;
+                    case 6: handleViewAccount(); break;
+                    case 7: handleViewTransactions(); break;
+                    case 8: System.out.println("Thank you! Goodbye."); return;
+                    default: System.out.println("Invalid choice. Please enter 1-8.");
                 }
             } catch (Exception e) {
                 System.out.println("ERROR: " + e.getMessage());
-                if (!scanner.hasNextLine()) {
-                    return;
-                }
             }
-            System.out.println();
         }
     }
 
     private void displayMainMenu() {
-        System.out.println("========================================");
-        System.out.println("       GLOBAL DIGITAL BANK");
+        System.out.println("\n========================================");
+        System.out.println("   GLOBAL DIGITAL BANK");
         System.out.println("========================================");
         System.out.println("1. Open Account");
         System.out.println("2. Deposit");
@@ -76,115 +55,102 @@ public class AccountUI {
     }
 
     private void handleOpenAccount() throws Exception {
-        System.out.println("--- Open Account ---");
+        System.out.println("\n--- Open Account ---");
         String type = readString("Account Type (Savings/Current/FixedDeposit/Salary): ");
         String name = readString("Name: ");
         int age = readInt("Age: ");
         double amount = readDouble("Initial Balance: ");
 
-        IAccount account = service.openAccount(type, name, age, amount);
-        System.out.println("SUCCESS: " + account.getAccountInfo());
+        IAccount acc = service.openAccount(type, name, age, amount);
+        System.out.println("SUCCESS: " + acc.getAccountInfo());
 
         int pin = readInt("Set 4-digit PIN: ");
-        account.setPin(pin);
+        acc.setPin(pin);
         System.out.println("PIN set successfully.");
     }
 
     private void handleDeposit() throws Exception {
-        System.out.println("--- Deposit ---");
-        int accountNumber = readInt("Account Number: ");
+        System.out.println("\n--- Deposit ---");
+        int accNo = readInt("Account Number: ");
         double amount = readDouble("Amount to deposit: ");
-        Transaction transaction = service.deposit(accountNumber, amount);
-        System.out.println("SUCCESS: " + transaction);
-        System.out.println("New balance: Rs. " + transaction.getBalanceAfter());
+        Transaction txn = service.deposit(accNo, amount);
+        System.out.println("SUCCESS: Deposited Rs. " + amount + " to #" + accNo + ". New balance: Rs. " + txn.getBalanceAfter());
     }
 
     private void handleWithdraw() throws Exception {
-        System.out.println("--- Withdraw ---");
-        int accountNumber = readInt("Account Number: ");
+        System.out.println("\n--- Withdraw ---");
+        int accNo = readInt("Account Number: ");
         double amount = readDouble("Amount to withdraw: ");
         int pin = readInt("PIN: ");
-        Transaction transaction = service.withdraw(accountNumber, amount, pin);
-        System.out.println("SUCCESS: " + transaction);
-        System.out.println("New balance: Rs. " + transaction.getBalanceAfter());
+        Transaction txn = service.withdraw(accNo, amount, pin);
+        System.out.println("SUCCESS: Withdrew Rs. " + amount + " from #" + accNo + ". New balance: Rs. " + txn.getBalanceAfter());
     }
 
     private void handleTransfer() throws Exception {
-        System.out.println("--- Transfer ---");
-        int fromAccount = readInt("From Account: ");
-        int toAccount = readInt("To Account: ");
+        System.out.println("\n--- Transfer ---");
+        int fromAcc = readInt("From Account: ");
+        int toAcc = readInt("To Account: ");
         double amount = readDouble("Amount: ");
         int pin = readInt("PIN: ");
-        Transaction transaction = service.transfer(fromAccount, toAccount, amount, pin);
-        System.out.println("SUCCESS: " + transaction);
+        Transaction txn = service.transfer(fromAcc, toAcc, amount, pin);
+        System.out.println("SUCCESS: Transferred Rs. " + amount + " from #" + fromAcc + " to #" + toAcc);
     }
 
     private void handleCloseAccount() throws Exception {
-        System.out.println("--- Close Account ---");
-        int accountNumber = readInt("Account Number: ");
+        System.out.println("\n--- Close Account ---");
+        int accNo = readInt("Account Number: ");
         int pin = readInt("PIN: ");
-        service.closeAccount(accountNumber, pin);
-        System.out.println("SUCCESS: Account #" + accountNumber + " has been closed.");
+        service.closeAccount(accNo, pin);
+        System.out.println("SUCCESS: Account #" + accNo + " has been closed.");
     }
 
     private void handleViewAccount() {
-        System.out.println("--- View Account ---");
-        int accountNumber = readInt("Account Number: ");
-        IAccount account = service.getAccount(accountNumber);
-        if (account == null) {
-            System.out.println("Account not found: " + accountNumber);
+        System.out.println("\n--- View Account Details ---");
+        int accNo = readInt("Account Number: ");
+        IAccount acc = service.getAccount(accNo);
+        if (acc == null) {
+            System.out.println("ERROR: Account not found: " + accNo);
         } else {
-            System.out.println(account.getAccountInfo());
+            System.out.println(acc.getAccountInfo());
         }
     }
 
     private void handleViewTransactions() {
-        System.out.println("--- Transaction History ---");
+        System.out.println("\n--- Transaction History ---");
         List<TransactionCommand> history = service.getTransactionHistory();
         if (history.isEmpty()) {
             System.out.println("No transactions logged.");
-            return;
-        }
-
-        for (int i = 0; i < history.size(); i++) {
-            Transaction transaction = history.get(i).getTransaction();
-            System.out.println("[" + (i + 1) + "] "
-                    + (transaction != null ? transaction : "Transaction completed (details unavailable)"));
+        } else {
+            for (int i = 0; i < history.size(); i++) {
+                System.out.println("  [" + (i + 1) + "] " + history.get(i).getTransaction());
+            }
         }
     }
 
     private int readInt(String prompt) {
         while (true) {
-            String value = readString(prompt);
+            System.out.print(prompt);
             try {
-                return Integer.parseInt(value);
+                return Integer.parseInt(scanner.nextLine().trim());
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a whole number.");
+                System.out.println("Invalid integer number. Please try again.");
             }
         }
     }
 
     private double readDouble(String prompt) {
         while (true) {
-            String value = readString(prompt);
+            System.out.print(prompt);
             try {
-                double number = Double.parseDouble(value);
-                if (!Double.isFinite(number)) {
-                    System.out.println("Invalid input. Please enter a finite number.");
-                    continue;
-                }
-                return number;
+                return Double.parseDouble(scanner.nextLine().trim());
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a number.");
+                System.out.println("Invalid decimal number. Please try again.");
             }
         }
     }
 
     private String readString(String prompt) {
         System.out.print(prompt);
-        if (!scanner.hasNextLine()) {
-            throw new NoSuchElementException("No more input available.");
-        }
         return scanner.nextLine().trim();
     }
 }
