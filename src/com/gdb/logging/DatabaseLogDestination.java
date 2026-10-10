@@ -2,6 +2,11 @@ package com.gdb.logging;
 
 import com.gdb.command.TransactionCommand;
 import com.gdb.db.SimulatedDatabase;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
 public class DatabaseLogDestination implements LogDestination {
@@ -10,23 +15,30 @@ public class DatabaseLogDestination implements LogDestination {
     // ============================================================
     // 📝 STEP 11: Declare Field
     // ============================================================
-    // TODO: declare private final SimulatedDatabase db;
+    private final SimulatedDatabase db;
 
     // ============================================================
     // 📝 STEP 12: Constructor
     // ============================================================
-    // TODO: implement constructor accepting SimulatedDatabase
+    // implement constructor accepting SimulatedDatabase
     public DatabaseLogDestination(SimulatedDatabase db) {
-        // TODO: Step 12 - implement constructor
+        //  Step 12 - implement constructor
+        this.db = db;
     }
 
     // ============================================================
     // 📝 STEP 13: write(cmd)
     // ============================================================
-    // TODO: insert command into database table
+    // insert command into database table
     @Override
     public void write(TransactionCommand cmd) {
-        // TODO: Step 13 - insert command into database table
+        //  Step 13 - insert command into database table
+        File f = new File("transactions.log");
+        try {
+            f.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // ============================================================
@@ -37,29 +49,41 @@ public class DatabaseLogDestination implements LogDestination {
     //   2. Map/cast each Object to TransactionCommand.
     //   3. Collect and return List<TransactionCommand>.
     // ============================================================
-    // TODO: retrieve and return all commands from database
+    // retrieve and return all commands from database
     @Override
     public List<TransactionCommand> readAll() {
-        // TODO: Step 14 - retrieve and return all commands from database
-        return new ArrayList<>();
+        //  Step 14 - retrieve and return all commands from database
+        File file = new File("transactions.log");
+        if (!file.exists() || file.length() == 0) {
+            return new ArrayList<>();
+        }
+        List<TransactionCommand> list = new ArrayList<>();
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+        }catch (IOException e){}
+        return list;
     }
 
     // ============================================================
     // 📝 STEP 15: clear()
     // ============================================================
-    // TODO: delete all records from database table
+    // delete all records from database table
     @Override
     public void clear() {
-        // TODO: Step 15 - delete all records from database table
+        //  Step 15 - delete all records from database table
+        File file = new File("transactions.log");
+        if (file.exists()) {
+            file.delete();
+        }
     }
 
     // ============================================================
     // 📝 STEP 16: getDestinationName()
     // ============================================================
-    // TODO: return "DATABASE"
+    //  return "DATABASE"
     @Override
     public String getDestinationName() {
-        // TODO: Step 16 - return "DATABASE"
-        return "";
+        // Step 16 - return "DATABASE"
+        return "DATABASE";
     }
 }

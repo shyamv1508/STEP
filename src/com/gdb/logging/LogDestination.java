@@ -10,24 +10,24 @@ public interface LogDestination {
     // ============================================================
     // 📝 STEP 1: Add write(TransactionCommand cmd)
     // ============================================================
-    // TODO: declare write method
+    //  declare write method
     void write(TransactionCommand cmd);
 
     // ============================================================
     // 📝 STEP 2: Add readAll()
     // ============================================================
-    // TODO: declare readAll method returning List<TransactionCommand>
+    //  declare readAll method returning List<TransactionCommand>
     List<TransactionCommand> readAll();
 
     // ============================================================
     // 📝 STEP 3: Add clear()
     // ============================================================
-    // TODO: declare clear method
+    //  declare clear method
     void clear();
 
     // ============================================================
     // 📝 STEP 4: Add getDestinationName()
     // ============================================================
-    // TODO: declare getDestinationName method returning String
+    //  declare getDestinationName method returning String
     String getDestinationName();
 }

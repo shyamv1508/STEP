@@ -11,22 +11,25 @@ public class TransactionLogger {
     // ============================================================
     // 📝 STEP 17: Declare Field
     // ============================================================
-    // TODO: declare protected LogDestination destination;
+    protected LogDestination destination;
 
     // ============================================================
     // 📝 STEP 18: Constructor
     // ============================================================
-    // TODO: implement constructor accepting LogDestination
+    // implement constructor accepting LogDestination
     public TransactionLogger(LogDestination destination) {
-        // TODO: Step 18 - implement constructor
+        //  Step 18 - implement constructor
+        this.destination = destination;
     }
 
     // ============================================================
     // 📝 STEP 19: setDestination
     // ============================================================
-    // TODO: implement setter for hot-swapping destination
+    //  implement setter for hot-swapping destination
     public void setDestination(LogDestination destination) {
-        // TODO: Step 19 - implement setter
+        // Step 19 - implement setter
+        this.destination = destination;
+
     }
 
     // ============================================================
