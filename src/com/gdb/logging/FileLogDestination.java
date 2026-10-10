@@ -31,11 +31,10 @@ public class FileLogDestination implements LogDestination {
     @Override
     public void write(TransactionCommand cmd) {
         //  Step 7 - delegate to log.log(cmd)
-        File f = new File("transactions.log");
         try {
-            f.createNewFile();
+            log.log(cmd);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
@@ -46,15 +45,13 @@ public class FileLogDestination implements LogDestination {
     @Override
     public List<TransactionCommand> readAll() {
         //  Step 8 - delegate to log.readAll()
-        File file = new File("transactions.log");
-        if (!file.exists() || file.length() == 0) {
-            return new ArrayList<>();
-        }
-        List<TransactionCommand> list = new ArrayList<>();
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-        }catch (IOException e){}
-        return list;
+            return log.readAll();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -65,10 +62,7 @@ public class FileLogDestination implements LogDestination {
     @Override
     public void clear() {
         //  Step 9 - delegate to log.clear()
-        File file = new File("transactions.log");
-        if (file.exists()) {
-            file.delete();
-        }
+        log.clear();
     }
 
     // ============================================================

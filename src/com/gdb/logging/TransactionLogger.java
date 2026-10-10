@@ -35,34 +35,34 @@ public class TransactionLogger {
     // ============================================================
     // 📝 STEP 20: log(TransactionCommand cmd)
     // ============================================================
-    // TODO: delegate to destination.write(cmd)
+    // delegate to destination.write(cmd)
     public void log(TransactionCommand cmd) {
-        // TODO: Step 20 - delegate to destination.write(cmd)
+        destination.write(cmd);
     }
 
     // ============================================================
     // 📝 STEP 21: readAll()
     // ============================================================
-    // TODO: delegate to destination.readAll()
+    // delegate to destination.readAll()
     public List<TransactionCommand> readAll() {
-        // TODO: Step 21 - delegate to destination.readAll()
+        destination.readAll();
         return new ArrayList<>();
     }
 
     // ============================================================
     // 📝 STEP 22: clear()
     // ============================================================
-    // TODO: delegate to destination.clear()
+    // delegate to destination.clear()
     public void clear() {
-        // TODO: Step 22 - delegate to destination.clear()
+        destination.clear();
     }
 
     // ============================================================
     // 📝 STEP 23: getDestinationName()
     // ============================================================
-    // TODO: delegate to destination.getDestinationName()
+    // delegate to destination.getDestinationName()
     public String getDestinationName() {
-        // TODO: Step 23 - delegate to destination.getDestinationName()
+        destination.getDestinationName();
         return "";
     }
 }

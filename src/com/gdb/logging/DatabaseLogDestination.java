@@ -33,12 +33,7 @@ public class DatabaseLogDestination implements LogDestination {
     @Override
     public void write(TransactionCommand cmd) {
         //  Step 13 - insert command into database table
-        File f = new File("transactions.log");
-        try {
-            f.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        db.insert(TABLE, cmd);
     }
 
     // ============================================================
@@ -53,15 +48,12 @@ public class DatabaseLogDestination implements LogDestination {
     @Override
     public List<TransactionCommand> readAll() {
         //  Step 14 - retrieve and return all commands from database
-        File file = new File("transactions.log");
-        if (!file.exists() || file.length() == 0) {
-            return new ArrayList<>();
+        List<TransactionCommand> transactions = new ArrayList<>();
+        for(Object obj : db.selectAll(TABLE)) {
+            transactions.add((TransactionCommand)obj);
         }
-        List<TransactionCommand> list = new ArrayList<>();
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-        }catch (IOException e){}
-        return list;
+        return  transactions;
+
     }
 
     // ============================================================
@@ -71,10 +63,7 @@ public class DatabaseLogDestination implements LogDestination {
     @Override
     public void clear() {
         //  Step 15 - delete all records from database table
-        File file = new File("transactions.log");
-        if (file.exists()) {
-            file.delete();
-        }
+        db.deleteAll(TABLE);
     }
 
     // ============================================================
