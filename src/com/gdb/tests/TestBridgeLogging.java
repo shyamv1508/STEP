@@ -21,18 +21,19 @@ public class TestBridgeLogging {
         // 📝 STEP 24: Create Destinations
         //
         // INSTRUCTIONS:
-        //   1. fileDest = new FileLogDestination(); fileDest.clear();
-        //   2. db = new SimulatedDatabase();
-        //   3. dbDest = new DatabaseLogDestination(db);
-        //   4. memDest = new MemoryLogDestination();
+        FileLogDestination fileDest = new FileLogDestination();
+        fileDest.clear();
+        SimulatedDatabase db = new SimulatedDatabase();
+        DatabaseLogDestination dbDest = new DatabaseLogDestination(db);
+        MemoryLogDestination memDest = new MemoryLogDestination();
         // ============================================================
-        // TODO: instantiate all log destinations
+        //  instantiate all log destinations
 
         // ============================================================
         // 📝 STEP 25: Create TransactionLogger with File Destination
         //
         // INSTRUCTIONS:
-        //   1. logger = new TransactionLogger(fileDest);
+        TransactionLogger logger = new TransactionLogger(fileDest);
         //   2. Execute and log 3 commands (Deposit, Withdraw, Transfer).
         //   3. Print count from logger.readAll().
         // ============================================================
