@@ -82,9 +82,13 @@ public class TransactionLog {
     // INSTRUCTIONS:
     //   Delete the log file if it exists.
     // ============================================================
-    // TODO: delete log file to reset history
+    //  delete log file to reset history
     public synchronized void clear() {
-        // TODO: Step 9 - delete log file if it exists
+        //  Step 9 - delete log file if it exists
+        File file = new File(FILE_PATH);
+        if (file.exists()) {
+            file.delete();
+        }
 
     }
 }
