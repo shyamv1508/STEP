@@ -45,8 +45,7 @@ public class TransactionLogger {
     // ============================================================
     // delegate to destination.readAll()
     public List<TransactionCommand> readAll() {
-        destination.readAll();
-        return new ArrayList<>();
+        return destination.readAll();
     }
 
     // ============================================================
@@ -62,7 +61,6 @@ public class TransactionLogger {
     // ============================================================
     // delegate to destination.getDestinationName()
     public String getDestinationName() {
-        destination.getDestinationName();
-        return "";
+        return destination.getDestinationName();
     }
 }

@@ -33,7 +33,7 @@ public class TestBridgeLogging {
         // 📝 STEP 25: Create TransactionLogger with File Destination
         //
         // INSTRUCTIONS:
-        TransactionLogger logger = new TransactionLogger(fileDest);
+        //   1. TransactionLogger logger = new TransactionLogger(fileDest);
         //   2. Execute and log 3 commands (Deposit, Withdraw, Transfer).
         //   3. Print count from logger.readAll().
         // ============================================================
