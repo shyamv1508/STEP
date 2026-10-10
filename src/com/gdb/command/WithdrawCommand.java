@@ -43,7 +43,7 @@ public class WithdrawCommand implements TransactionCommand {
     @Override
     public void execute() throws Exception {
         // TODO: Step 5 - implement execute()
-        this.transaction = account.withdrawWithTransaction(amount, pin);
+        this.transaction = ((Account) account).withdrawWithTransaction(amount, pin);
 
     }
 

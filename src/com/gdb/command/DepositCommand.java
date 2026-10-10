@@ -44,7 +44,7 @@ public class DepositCommand implements TransactionCommand {
     @Override
     public void execute() throws Exception {
         // TODO: Step 5 - implement execute()
-        this.transaction = account.depositWithTransaction(amount);
+        this.transaction = ((Account) account).depositWithTransaction(amount);
     }
 
     // ============================================================

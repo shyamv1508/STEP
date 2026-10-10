@@ -45,7 +45,7 @@ public class TransferCommand implements TransactionCommand {
     @Override
     public void execute() throws Exception {
         // TODO: Step 5 - implement execute()
-        new TransferService().transferWithTransaction(fromAccount, toAccount, amount, pin);
+        this.transaction = new TransferService().transferWithTransaction(fromAccount, toAccount, amount, pin);
     }
 
     // ============================================================
