@@ -31,50 +31,93 @@ public class TestBridgeLogging {
 
         // ============================================================
         // 📝 STEP 25: Create TransactionLogger with File Destination
-        //
-        // INSTRUCTIONS:
-        //   1. TransactionLogger logger = new TransactionLogger(fileDest);
-        //   2. Execute and log 3 commands (Deposit, Withdraw, Transfer).
-        //   3. Print count from logger.readAll().
         // ============================================================
-        // TODO: log transactions to FILE destination
+        TransactionLogger logger = new TransactionLogger(fileDest);
+
+        DepositCommand dep1 = new DepositCommand(acc1, 1000);
+        dep1.execute();
+        logger.log(dep1);
+
+        WithdrawCommand with1 = new WithdrawCommand(acc1, 500, 1234);
+        with1.execute();
+        logger.log(with1);
+
+        TransferCommand trans1 = new TransferCommand(acc1, acc2, 1000, 1234);
+        trans1.execute();
+        logger.log(trans1);
+
+        System.out.println("\n[STEP 25] Logging to FILE destination...");
+        System.out.println("  FILE log count: " + logger.readAll().size());
 
         // ============================================================
         // 📝 STEP 26: Switch to Database Destination
-        //
-        // INSTRUCTIONS:
-        //   1. logger.setDestination(dbDest);
-        //   2. Execute and log 3 commands.
-        //   3. Print count from logger.readAll().
         // ============================================================
-        // TODO: log transactions to DATABASE destination
+        logger.setDestination(dbDest);
+
+        DepositCommand dep2 = new DepositCommand(acc1, 1000);
+        dep2.execute();
+        logger.log(dep2);
+
+        WithdrawCommand with2 = new WithdrawCommand(acc1, 500, 1234);
+        with2.execute();
+        logger.log(with2);
+
+        TransferCommand trans2 = new TransferCommand(acc1, acc2, 1000, 1234);
+        trans2.execute();
+        logger.log(trans2);
+
+        System.out.println("\n[STEP 26] Switched to DATABASE destination...");
+        System.out.println("  DATABASE log count: " + logger.readAll().size());
 
         // ============================================================
         // 📝 STEP 27: Switch to Memory Destination
-        //
-        // INSTRUCTIONS:
-        //   1. logger.setDestination(memDest);
-        //   2. Execute and log 3 commands.
-        //   3. Print count from logger.readAll().
         // ============================================================
-        // TODO: log transactions to MEMORY destination
+        logger.setDestination(memDest);
+
+        DepositCommand dep3 = new DepositCommand(acc1, 1000);
+        dep3.execute();
+        logger.log(dep3);
+
+        WithdrawCommand with3 = new WithdrawCommand(acc1, 500, 1234);
+        with3.execute();
+        logger.log(with3);
+
+        TransferCommand trans3 = new TransferCommand(acc1, acc2, 1000, 1234);
+        trans3.execute();
+        logger.log(trans3);
+
+        System.out.println("\n[STEP 27] Switched to MEMORY destination...");
+        System.out.println("  MEMORY log count: " + logger.readAll().size());
 
         // ============================================================
         // 📝 STEP 28: Verify Data Isolation Across Backends
-        //
-        // INSTRUCTIONS:
-        //   1. logger.setDestination(fileDest); print count (should be 3).
-        //   2. logger.setDestination(dbDest); print count (should be 3).
-        //   3. logger.setDestination(memDest); print count (should be 3).
         // ============================================================
-        // TODO: verify each backend maintained its independent data store
+        System.out.println("\n[STEP 28] Verifying Data Isolation:");
+
+        logger.setDestination(fileDest);
+        int fileCount = logger.readAll().size();
+        System.out.println("  FILE count: " + fileCount + " [EXPECTED: 3]");
+
+        logger.setDestination(dbDest);
+        int dbCount = logger.readAll().size();
+        System.out.println("  DATABASE count: " + dbCount + " [EXPECTED: 3]");
+
+        logger.setDestination(memDest);
+        int memoryCount = logger.readAll().size();
+        System.out.println("  MEMORY count: " + memoryCount + " [EXPECTED: 3]");
 
         // ============================================================
-        // 📝 STEP 29: Print Destination Names
-        //
-        // INSTRUCTIONS:
-        //   Print getDestinationName() for each backend.
+        // 📝 STEP 29: Print Destination Names and Final Result
         // ============================================================
-        // TODO: display active backend names
+        System.out.println("\n[STEP 29] Destination Names:");
+        System.out.println("  " + fileDest.getDestinationName());
+        System.out.println("  " + dbDest.getDestinationName());
+        System.out.println("  " + memDest.getDestinationName());
+
+        if (fileCount == 3 && dbCount == 3 && memoryCount == 3) {
+            System.out.println("\n[STEP 29] All Bridge Pattern log backends verified successfully!");
+        } else {
+            System.out.println("\n[STEP 29] Verification FAILED. Check the log destination implementations.");
+        }
     }
 }
