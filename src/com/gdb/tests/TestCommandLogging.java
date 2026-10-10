@@ -18,7 +18,7 @@ public class TestCommandLogging {
         // 📝 STEP 10: Create Test Accounts
         //
         // INSTRUCTIONS:
-        // TODO: create acc1, acc2 and set PIN on acc1
+        // create acc1, acc2 and set PIN on acc1
         IAccount acc1 = AccountFactory.createAccount("SAVINGS", 1001, "John Doe", 25, 15000);
         acc1.setPin(1234);
         IAccount acc2 = AccountFactory.createAccount("SAVINGS", 1002, "Jane Smith", 30, 10000);
@@ -34,7 +34,7 @@ public class TestCommandLogging {
         log.log(depCmd);
         System.out.println(depCmd.getTransaction());
         // ============================================================
-        // TODO: execute and log DepositCommand
+        //  execute and log DepositCommand
 
         // ============================================================
         // 📝 STEP 12: Execute and Log WithdrawCommand
@@ -45,7 +45,7 @@ public class TestCommandLogging {
         log.log(wthCmd);
         System.out.println(wthCmd.getTransaction());
         // ============================================================
-        // TODO: execute and log WithdrawCommand
+        //  execute and log WithdrawCommand
 
         // ============================================================
         // 📝 STEP 13: Execute and Log TransferCommand
@@ -56,7 +56,7 @@ public class TestCommandLogging {
         log.log(trfCmd);
         System.out.println(trfCmd.getTransaction());
         // ============================================================
-        // TODO: execute and log TransferCommand
+        // execute and log TransferCommand
 
         // ============================================================
         // 📝 STEP 14: Read All Commands Back
@@ -65,7 +65,7 @@ public class TestCommandLogging {
         //   1. List<TransactionCommand> history = log.readAll();
         //   2. Print history size and iterate printing each cmd.getTransaction();
         // ============================================================
-        // TODO: read all logged commands and display audit trail
+        //  read all logged commands and display audit trail
         List<TransactionCommand> history = log.readAll();
         System.out.println(history);
         for (TransactionCommand cmd : history) {
