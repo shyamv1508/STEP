@@ -15,7 +15,7 @@ public class InMemoryAccountRepository implements AccountRepository {
     //   1. Declare a private final Map<Integer, IAccount> accounts = new HashMap<>()
     //   2. Declare a private int nextAccountNumber = 1001
     // ============================================================
-    // TODO: Step 1 - declare fields
+    // TODO: Step 1 - declare fields done
     private final Map<Integer, IAccount> accounts = new HashMap<>();
     private int nextAccountNumber = 1001;
 
@@ -27,6 +27,7 @@ public class InMemoryAccountRepository implements AccountRepository {
     // ============================================================
     @Override
     public void save(IAccount account) {
+
         // TODO: Step 2 - save account to map
     }
 
@@ -39,6 +40,7 @@ public class InMemoryAccountRepository implements AccountRepository {
     @Override
     public IAccount findById(int accountNumber) {
         // TODO: Step 3 - retrieve account by ID
+
         return null;
     }
 
