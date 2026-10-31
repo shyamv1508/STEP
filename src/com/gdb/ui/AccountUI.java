@@ -242,7 +242,7 @@ public class AccountUI {
     }
 
     // ============================================================
-    // 📝 STEP 11: Implement handleViewTransactions()
+    // 📝 STEP 11: Implement handleViewTransactions()    DONE
     //
     // INSTRUCTIONS:
     //   1. List<TransactionCommand> history = service.getTransactionHistory()
@@ -252,6 +252,13 @@ public class AccountUI {
     // TODO: implement view transaction history
     private void handleViewTransactions() {
         // TODO: Step 11 - implement view transaction history
+        List<TransactionCommand> history = service.getTransactionHistory();
+        if(history == null){
+            System.out.println("No transactions logged.");
+        }
+        else{
+            System.out.println(history);
+        }
     }
 
     // ============================================================
@@ -260,6 +267,7 @@ public class AccountUI {
     // TODO: implement robust integer reader
     private int readInt(String prompt) {
         // TODO: Step 12 - implement robust integer reader
+
         return 0;
     }
 
