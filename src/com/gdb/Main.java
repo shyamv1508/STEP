@@ -11,14 +11,14 @@ public class Main {
         System.out.println("Booting Global Digital Bank...");
 
         // ============================================================
-        // 📝 STEP 15: Wire Up Dependencies and Start UI
+        // 📝 STEP 15: Wire Up Dependencies and Start UI DONE
         //
         // INSTRUCTIONS:
-        //   1. LogDestination destination = new FileLogDestination();
-        //   2. TransactionLogger logger = new TransactionLogger(destination);
-        //   3. AccountService service = new AccountService(logger);
-        //   4. AccountUI ui = new AccountUI(service);
-        //   5. ui.start();
+        LogDestination destination = new FileLogDestination();
+        TransactionLogger logger = new TransactionLogger(destination);
+        AccountService service = new AccountService(logger);
+        AccountUI ui = new AccountUI(service);
+        ui.start();
         // ============================================================
         // TODO: initialize dependencies and launch AccountUI console app
     }

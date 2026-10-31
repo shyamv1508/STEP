@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ebc903e7-7ae5-4231-a8a2-38c06e82eb9b" name="Changes" comment="Activity 20 till step 10">
+    <list default="true" id="ebc903e7-7ae5-4231-a8a2-38c06e82eb9b" name="Changes" comment="Activity 20 till step 11">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/STEP.iml" beforeDir="false" afterPath="$PROJECT_DIR$/STEP.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/com/gdb/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/com/gdb/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/com/gdb/ui/AccountUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/com/gdb/ui/AccountUI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/gdb/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/gdb/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/gdb/ui/AccountUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/gdb/ui/AccountUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,6 +110,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.Main.executor": "Run",
     "Application.TestAccountUI.executor": "Run",
     "Application.TestCommandLogging.executor": "Run",
     "KEY_CHAT_IN_TOOLWINDOW": "false",
@@ -170,7 +174,8 @@
     <MESSAGE value="Activity 21" />
     <MESSAGE value="Activity 20" />
     <MESSAGE value="Activity 20 till step 10" />
-    <option name="LAST_COMMIT_MESSAGE" value="Activity 20 till step 10" />
+    <MESSAGE value="Activity 20 till step 11" />
+    <option name="LAST_COMMIT_MESSAGE" value="Activity 20 till step 11" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

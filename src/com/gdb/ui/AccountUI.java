@@ -239,6 +239,9 @@ public class AccountUI {
         if(acc == null){
             System.out.println("Account not found: " + accNo);
         }
+        else{
+            System.out.println(acc.getAccountInfo());
+        }
     }
 
     // ============================================================
@@ -262,30 +265,32 @@ public class AccountUI {
     }
 
     // ============================================================
-    // 📝 STEP 12: Implement readInt(String prompt)
+    // 📝 STEP 12: Implement readInt(String prompt)  DONE
     // ============================================================
     // TODO: implement robust integer reader
     private int readInt(String prompt) {
         // TODO: Step 12 - implement robust integer reader
-
-        return 0;
+        System.out.printf(prompt);
+        return scanner.nextInt();
     }
 
     // ============================================================
-    // 📝 STEP 13: Implement readDouble(String prompt)
+    // 📝 STEP 13: Implement readDouble(String prompt)   DONE
     // ============================================================
     // TODO: implement robust double reader
     private double readDouble(String prompt) {
         // TODO: Step 13 - implement robust double reader
-        return 0.0;
+        System.out.printf(prompt);
+        return scanner.nextDouble();
     }
 
     // ============================================================
-    // 📝 STEP 14: Implement readString(String prompt)
+    // 📝 STEP 14: Implement readString(String prompt)   DONE
     // ============================================================
     // TODO: implement string reader
     private String readString(String prompt) {
         // TODO: Step 14 - implement string reader
-        return "";
+        System.out.printf(prompt);
+        return scanner.next();
     }
 }
