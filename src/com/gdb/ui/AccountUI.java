@@ -156,7 +156,8 @@ public class AccountUI {
         int accNo = readInt("Account Number: ");
         double amount = readDouble("Amount to deposit: ");
         Transaction txn = service.deposit(accNo, amount);
-        System.out.println("SUCESS : Deposited Rs." + amount + " to #" + accNo + ".  New Balance:  " + service.getBalance() );
+        IAccount acc = service.getAccount(accNo);
+        System.out.println("SUCESS : Deposited Rs." + amount + " to #" + accNo + ".  New Balance:  " + acc.getBalance() );
     }
 
     // ============================================================
@@ -176,7 +177,8 @@ public class AccountUI {
         double amount = readDouble("Amount to withdraw: ");
         int pin = readInt("PIN: ");
         Transaction txn = service.withdraw(accNo, amount, pin);
-        System.out.println("SUCESS : Withdrawed Rs." + amount + " from #" + accNo + ". New Balance:  " + service.getBalance());
+        IAccount acc = service.getAccount(accNo);
+        System.out.println("SUCESS : Withdrawed Rs." + amount + " from #" + accNo + ". New Balance:  " + acc.getBalance());
     }
 
     // ============================================================
@@ -198,7 +200,7 @@ public class AccountUI {
         double amount = readDouble("Amount: ");
         int pin = readInt("PIN: ");
         Transaction txn = service.transfer(fromAcc, toAcc, amount, pin);
-        System.out.println("SUCESS  : Transferred Rs." + amount + " From #" + fromAcc + " to #" + toAcc + " New Balace : " + service.getBalance());
+        System.out.println("SUCESS  : Transferred Rs." + amount + " From #" + fromAcc + " to #" + toAcc );
     }
 
     // ============================================================
@@ -216,7 +218,8 @@ public class AccountUI {
         int accNo = readInt("Account Number: ");
         int pin = readInt("PIN: ");
         service.closeAccount(accNo, pin);
-        System.out.println("SUCESS : Closed #" + accNo + " Closing Balance: " + service.getBalance);
+        IAccount acc = service.getAccount(accNo);
+        System.out.println("SUCESS : Closed #" + accNo + " Closing Balance: " + acc.getBalance());
     }
 
     // ============================================================
@@ -234,7 +237,7 @@ public class AccountUI {
         int accNo = readInt("Account Number: ");
         IAccount acc = service.getAccount(accNo);
         if(acc == null){
-            System.out.pritln("Account not found: " + acccNo);
+            System.out.println("Account not found: " + accNo);
         }
     }
 
