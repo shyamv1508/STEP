@@ -10,12 +10,12 @@ import java.util.*;
 
 public class AccountUI {
     // ============================================================
-    // 📝 STEP 1: Declare Fields
+    // 📝 STEP 1: Declare Fields done
     // ============================================================
     // TODO: declare private final AccountService service and Scanner scanner
-
+    private final AccountService service, Scanner scanner;
     // ============================================================
-    // 📝 STEP 2: Constructor
+    // 📝 STEP 2: Constructor done
     //
     // INSTRUCTIONS:
     //   1. Accept AccountService parameter.
@@ -25,10 +25,12 @@ public class AccountUI {
     // TODO: implement constructor
     public AccountUI(AccountService service) {
         // TODO: Step 2 - implement constructor
+        this.service = service;
+        scanner = new Scanner(System.in);
     }
 
     // ============================================================
-    // 📝 STEP 3: Implement start() (Main Menu Loop)
+    // 📝 STEP 3: Implement start() (Main Menu Loop)  done
     //
     // INSTRUCTIONS:
     //   while (true) {
@@ -54,18 +56,66 @@ public class AccountUI {
     // TODO: implement start() menu loop
     public void start() {
         // TODO: Step 3 - implement start() menu loop
+        while (true) {
+            displayMainMenu();
+            int choice = readInt("Enter your choice: ");
+            try {
+                switch (choice) {
+                    case 1:
+                        handleOpenAccount();
+                        break;
+                    case 2:
+                        handleDeposit();
+                        break;
+                    case 3:
+                        handleWithdraw();
+                        break;
+                    case 4:
+                        handleTransfer();
+                        break;
+                    case 5:
+                        handleCloseAccount();
+                        break;
+                    case 6:
+                        handleViewAccount();
+                        break;
+                    case 7:
+                        handleViewTransactions();
+                        break;
+                    case 8:
+                        System.out.println("Thank you! Goodbye.");
+                        return;
+                    default: System.out.println("Invalid choice. Please enter 1-8.");
+                }
+            } catch (Exception e) {
+                System.out.println("ERROR: " + e.getMessage());
+            }
+        }
     }
 
     // ============================================================
-    // 📝 STEP 4: Implement displayMainMenu()
+    // 📝 STEP 4: Implement displayMainMenu()    DONE
     // ============================================================
     // TODO: print formatted main menu options
     private void displayMainMenu() {
         // TODO: Step 4 - print formatted main menu options
+        Syestem.out.println("========================================\n" +
+                "   GLOBAL DIGITAL BANK\n" +
+                "========================================\n" +
+                "1. Open Account\n" +
+                "2. Deposit\n" +
+                "3. Withdraw\n" +
+                "4. Transfer\n" +
+                "5. Close Account\n" +
+                "6. View Account Details\n" +
+                "7. View Transaction History\n" +
+                "8. Exit\n" +
+                "========================================\n\n");
+
     }
 
     // ============================================================
-    // 📝 STEP 5: Implement handleOpenAccount()
+    // 📝 STEP 5: Implement handleOpenAccount()  DONE
     //
     // INSTRUCTIONS:
     //   1. String type = readString("Account Type (Savings/Current/FixedDeposit/Salary): ")
@@ -80,10 +130,18 @@ public class AccountUI {
     // TODO: implement account opening interaction
     private void handleOpenAccount() throws Exception {
         // TODO: Step 5 - implement account opening interaction
+        String type = readString("Account Type (Savings/Current/FixedDeposit/Salary): ");
+        String name = readString("Name: ");
+        int age = readInt("Age: ");
+        double amount = readDouble("Initial Balance: ");
+        IAccount acc = service.openAccount(type, name, age, amount);
+        System.out.println("SUCCESS: " + acc.getAccountInfo());
+        int pin = readInt("Set 4-digit PIN: ");
+        acc.setPin(pin);
     }
 
     // ============================================================
-    // 📝 STEP 6: Implement handleDeposit()
+    // 📝 STEP 6: Implement handleDeposit()  DONE
     //
     // INSTRUCTIONS:
     //   1. int accNo = readInt("Account Number: ")
@@ -94,10 +152,14 @@ public class AccountUI {
     // TODO: implement deposit interaction
     private void handleDeposit() throws Exception {
         // TODO: Step 6 - implement deposit interaction
+        int accNo = readInt("Account Number: ");
+        double amount = readDouble("Amount to deposit: ");
+        Transaction txn = service.deposit(accNo, amount);
+        System.out.println("SUCESS : Deposited Rs." + amount + " to #" + accNo + ".  New Balance:  " + service.getBalance() );
     }
 
     // ============================================================
-    // 📝 STEP 7: Implement handleWithdraw()
+    // 📝 STEP 7: Implement handleWithdraw() DONE
     //
     // INSTRUCTIONS:
     //   1. int accNo = readInt("Account Number: ")
@@ -109,10 +171,15 @@ public class AccountUI {
     // TODO: implement withdrawal interaction
     private void handleWithdraw() throws Exception {
         // TODO: Step 7 - implement withdrawal interaction
+        int accNo = readInt("Account Number: ");
+        double amount = readDouble("Amount to withdraw: ");
+        int pin = readInt("PIN: ");
+        Transaction txn = service.withdraw(accNo, amount, pin);
+        System.out.println("SUCESS : Withdrawed Rs." + amount + " from #" + accNo + ". New Balance:  " + service.getBalance());
     }
 
     // ============================================================
-    // 📝 STEP 8: Implement handleTransfer()
+    // 📝 STEP 8: Implement handleTransfer() DONE
     //
     // INSTRUCTIONS:
     //   1. int fromAcc = readInt("From Account: ")
@@ -125,10 +192,16 @@ public class AccountUI {
     // TODO: implement transfer interaction
     private void handleTransfer() throws Exception {
         // TODO: Step 8 - implement transfer interaction
+        int fromAcc = readInt("From Account: ");
+        int toAcc = readInt("To Account: ");
+        double amount = readDouble("Amount: ");
+        int pin = readInt("PIN: ");
+        Transaction txn = service.transfer(fromAcc, toAcc, amount, pin);
+        System.out.println("SUCESS  : Transferred Rs." + amount + " From #" + fromAcc + " to #" + toAcc " New Balace : " + service.getBalance());
     }
 
     // ============================================================
-    // 📝 STEP 9: Implement handleCloseAccount()
+    // 📝 STEP 9: Implement handleCloseAccount()     DONE
     //
     // INSTRUCTIONS:
     //   1. int accNo = readInt("Account Number: ")
@@ -139,10 +212,14 @@ public class AccountUI {
     // TODO: implement close account interaction
     private void handleCloseAccount() throws Exception {
         // TODO: Step 9 - implement close account interaction
+        int accNo = readInt("Account Number: ");
+        int pin = readInt("PIN: ");
+        service.closeAccount(accNo, pin);
+        System.out.println("SUCESS : Closed #" + accNo + " Closing Balance: " + service.getBalance);
     }
 
     // ============================================================
-    // 📝 STEP 10: Implement handleViewAccount()
+    // 📝 STEP 10: Implement handleViewAccount() DONE
     //
     // INSTRUCTIONS:
     //   1. int accNo = readInt("Account Number: ")
@@ -153,6 +230,11 @@ public class AccountUI {
     // TODO: implement view account details
     private void handleViewAccount() {
         // TODO: Step 10 - implement view account details
+        int accNo = readInt("Account Number: ");
+        IAccount acc = service.getAccount(accNo);
+        if(acc == null){
+            System.out.pritln("Account not found: " + acccNo);
+        }
     }
 
     // ============================================================
