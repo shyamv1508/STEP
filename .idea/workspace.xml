@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ebc903e7-7ae5-4231-a8a2-38c06e82eb9b" name="Changes" comment="Activity 18">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/gdb/repository/InMemoryAccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/gdb/repository/InMemoryAccountRepository.java" afterDir="false" />
-    </list>
+    <list default="true" id="ebc903e7-7ae5-4231-a8a2-38c06e82eb9b" name="Changes" comment="Activity 21" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -166,7 +163,8 @@
     <MESSAGE value="Activity 17" />
     <MESSAGE value="Activity 17 completed" />
     <MESSAGE value="Activity 18" />
-    <option name="LAST_COMMIT_MESSAGE" value="Activity 18" />
+    <MESSAGE value="Activity 21" />
+    <option name="LAST_COMMIT_MESSAGE" value="Activity 21" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
