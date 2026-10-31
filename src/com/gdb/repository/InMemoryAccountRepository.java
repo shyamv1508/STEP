@@ -29,6 +29,7 @@ public class InMemoryAccountRepository implements AccountRepository {
     public void save(IAccount account) {
 
         // TODO: Step 2 - save account to map
+
     }
 
     // ============================================================
@@ -87,11 +88,12 @@ public class InMemoryAccountRepository implements AccountRepository {
     @Override
     public boolean exists(int accountNumber) {
         // TODO: Step 7 - check if account exists
+
         return false;
     }
 
     // ============================================================
-    // 📝 STEP 8: Implement nextAccountNumber()
+    // 📝 STEP 8: Implement nextAccountNumber()  DONE
     //
     // INSTRUCTIONS:
     //   Return current nextAccountNumber and post-increment it.
@@ -99,6 +101,6 @@ public class InMemoryAccountRepository implements AccountRepository {
     @Override
     public synchronized int nextAccountNumber() {
         // TODO: Step 8 - return and increment nextAccountNumber
-        return 0;
+        return this.nextAccountNumber++;
     }
 }
