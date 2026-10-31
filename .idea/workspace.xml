@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ebc903e7-7ae5-4231-a8a2-38c06e82eb9b" name="Changes" comment="Activity 20">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/gdb/ui/AccountUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/gdb/ui/AccountUI.java" afterDir="false" />
-    </list>
+    <list default="true" id="ebc903e7-7ae5-4231-a8a2-38c06e82eb9b" name="Changes" comment="Activity 20 till step 10" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -107,6 +104,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.TestAccountUI.executor": "Run",
     "Application.TestCommandLogging.executor": "Run",
     "KEY_CHAT_IN_TOOLWINDOW": "false",
     "RunOnceActivity.MCP Project settings loaded": "true",
@@ -168,7 +166,8 @@
     <MESSAGE value="Activity 18" />
     <MESSAGE value="Activity 21" />
     <MESSAGE value="Activity 20" />
-    <option name="LAST_COMMIT_MESSAGE" value="Activity 20" />
+    <MESSAGE value="Activity 20 till step 10" />
+    <option name="LAST_COMMIT_MESSAGE" value="Activity 20 till step 10" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

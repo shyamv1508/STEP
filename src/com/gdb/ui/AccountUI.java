@@ -13,7 +13,8 @@ public class AccountUI {
     // 📝 STEP 1: Declare Fields done
     // ============================================================
     // TODO: declare private final AccountService service and Scanner scanner
-    private final AccountService service, Scanner scanner;
+    private final AccountService service;
+    Scanner scanner = new Scanner(System.in);
     // ============================================================
     // 📝 STEP 2: Constructor done
     //
@@ -99,7 +100,7 @@ public class AccountUI {
     // TODO: print formatted main menu options
     private void displayMainMenu() {
         // TODO: Step 4 - print formatted main menu options
-        Syestem.out.println("========================================\n" +
+        System.out.println("========================================\n" +
                 "   GLOBAL DIGITAL BANK\n" +
                 "========================================\n" +
                 "1. Open Account\n" +
@@ -197,7 +198,7 @@ public class AccountUI {
         double amount = readDouble("Amount: ");
         int pin = readInt("PIN: ");
         Transaction txn = service.transfer(fromAcc, toAcc, amount, pin);
-        System.out.println("SUCESS  : Transferred Rs." + amount + " From #" + fromAcc + " to #" + toAcc " New Balace : " + service.getBalance());
+        System.out.println("SUCESS  : Transferred Rs." + amount + " From #" + fromAcc + " to #" + toAcc + " New Balace : " + service.getBalance());
     }
 
     // ============================================================
