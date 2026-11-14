@@ -6,6 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="ebc903e7-7ae5-4231-a8a2-38c06e82eb9b" name="Changes" comment="Activity 22">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/ACTIVITY_21.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/ACTIVITY_22.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/gdb/tests/TestAccountRulesEngineProperties.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/gdb/tests/TestAccountService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/gdb/tests/TestAccountUI.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/gdb/tests/TestRepositoryInMemory.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
