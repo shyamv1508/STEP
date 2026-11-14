@@ -100,7 +100,7 @@ public class InMemoryAccountRepository implements AccountRepository {
     // ============================================================
     @Override
     public synchronized int nextAccountNumber() {
-        // TODO: Step 8 - return and increment nextAccountNumber
+        // TODO: Step 8 - return and increment nextAccountNumber done
         return this.nextAccountNumber++;
     }
 }
