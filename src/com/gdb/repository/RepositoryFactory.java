@@ -1,5 +1,9 @@
 package com.gdb.repository;
 
+import com.gdb.db.ConnectionProvider;
+import com.gdb.db.JdbcConnectionProvider;
+import com.gdb.db.SchemaInitializer;
+
 import java.io.*;
 import java.util.Properties;
 
@@ -10,93 +14,87 @@ public class RepositoryFactory {
 
     private static AccountRepository accountRepositoryInstance;
     private static TransactionRepository transactionRepositoryInstance;
-    private static final String CONFIG_RESOURCE = "/config/persistence.properties";
+    private static ConnectionProvider connectionProviderInstance;
 
-    // ============================================================
-    // 📝 STEP 14: Read persistence.mode from Configuration
-    //
-    // INSTRUCTIONS:
-    //   1. Load properties from "config/persistence.properties" or classpath resource.
-    //   2. Return property value for "persistence.mode" (default to "memory" if missing).
-    // ============================================================
-    public static String getPersistenceMode() {
-        // TODO: Step 14 - read persistence.mode from properties    done
-        Properties properties = new Properties();
+    public static Properties loadPersistenceProperties() {
+        Properties props = new Properties();
+        String[] paths = {
+            "config/persistence.properties",
+            "src/main/resources/config/persistence.properties",
+            "bin/config/persistence.properties"
+        };
 
-        try (InputStream input =
-                     RepositoryFactory.class.getResourceAsStream(CONFIG_RESOURCE)) {
-            if (input != null) {
-                properties.load(input);
-            } else {
-                // Fallback for running from a project directory.
-                try (InputStream fileInput =
-                             new FileInputStream("src/main/resources/config/persistence.properties")) {
-                    properties.load(fileInput);
-                }
+        for (String p : paths) {
+            File f = new File(p);
+            if (f.exists()) {
+                try (InputStream in = new FileInputStream(f)) {
+                    props.load(in);
+                    return props;
+                } catch (IOException ignored) {}
             }
-        } catch (IOException e) {
-            // Keep the default mode if the configuration cannot be read.
         }
+        return props;
+    }
 
-        return properties.getProperty("persistence.mode", "memory").trim();
-
+    public static String getPersistenceMode() {
+        return loadPersistenceProperties().getProperty("persistence.mode", "memory").trim().toLowerCase();
     }
 
     // ============================================================
-    // 📝 STEP 15: Implement getAccountRepository()
+    // 📝 STEP 7: Implement getConnectionProvider()
     //
     // INSTRUCTIONS:
-    //   1. Check persistence mode:
-    //      - "memory" -> return singleton InMemoryAccountRepository
-    //      - "jdbc"   -> throw UnsupportedOperationException("JDBC repository not implemented yet - coming in Activity 22")
-    //      - "file"   -> throw UnsupportedOperationException("File repository not implemented yet")
-    //      - default  -> return InMemoryAccountRepository
+    //   1. If connectionProviderInstance is null:
+    //      - Read url from "persistence.db.url" (default "jdbc:sqlite:gdb.db")
+    //      - Read driver from "persistence.db.driver" (default "org.sqlite.JDBC")
+    //      - Instantiate JdbcConnectionProvider(url, driver)
+    //      - Call SchemaInitializer.initialize(connectionProviderInstance)
+    //   2. Return connectionProviderInstance.
     // ============================================================
+    public static synchronized ConnectionProvider getConnectionProvider() {
+        // TODO: Step 7 - return configured and initialized ConnectionProvider
+        return null;
+    }
+
     public static synchronized AccountRepository getAccountRepository() {
-        // TODO: Step 15 - return appropriate AccountRepository done
-        String mode = getPersistenceMode();
-
-        if ("jdbc".equalsIgnoreCase(mode)) {
-            throw new UnsupportedOperationException(
-                    "JDBC repository not implemented yet - coming in Activity 22");
-        }
-        if ("file".equalsIgnoreCase(mode)) {
-            throw new UnsupportedOperationException(
-                    "File repository not implemented yet");
-        }
-
         if (accountRepositoryInstance == null) {
-            accountRepositoryInstance = new InMemoryAccountRepository();
+            String mode = getPersistenceMode();
+            if ("memory".equals(mode)) {
+                accountRepositoryInstance = new InMemoryAccountRepository();
+            } else if ("jdbc".equals(mode)) {
+                // Connection provider initialized
+                getConnectionProvider();
+                // Placeholder for Activity 23 JdbcAccountRepository
+                throw new UnsupportedOperationException("JdbcAccountRepository will be implemented in Activity 23. Use memory mode or TestJdbcConnection for Activity 22.");
+            } else {
+                accountRepositoryInstance = new InMemoryAccountRepository();
+            }
         }
         return accountRepositoryInstance;
     }
 
-    // ============================================================
-    // 📝 STEP 16: Implement getTransactionRepository()
-    //
-    // INSTRUCTIONS:
-    //   1. Check persistence mode:
-    //      - "memory" -> return singleton InMemoryTransactionRepository
-    //      - "jdbc"   -> throw UnsupportedOperationException("JDBC repository not implemented yet - coming in Activity 22")
-    //      - "file"   -> throw UnsupportedOperationException("File repository not implemented yet")
-    //      - default  -> return InMemoryTransactionRepository
-    // ============================================================
     public static synchronized TransactionRepository getTransactionRepository() {
-        // TODO: Step 16 - return appropriate TransactionRepository done
-        String mode = getPersistenceMode();
-
-        if ("jdbc".equalsIgnoreCase(mode)) {
-            throw new UnsupportedOperationException(
-                    "JDBC repository not implemented yet - coming in Activity 22");
-        }
-        if ("file".equalsIgnoreCase(mode)) {
-            throw new UnsupportedOperationException(
-                    "File repository not implemented yet");
-        }
-
         if (transactionRepositoryInstance == null) {
-            transactionRepositoryInstance = new InMemoryTransactionRepository();
+            String mode = getPersistenceMode();
+            if ("memory".equals(mode)) {
+                transactionRepositoryInstance = new InMemoryTransactionRepository();
+            } else if ("jdbc".equals(mode)) {
+                getConnectionProvider();
+                // Placeholder for Activity 24 JdbcTransactionRepository
+                throw new UnsupportedOperationException("JdbcTransactionRepository will be implemented in Activity 24. Use memory mode or TestJdbcConnection for Activity 22.");
+            } else {
+                transactionRepositoryInstance = new InMemoryTransactionRepository();
+            }
         }
         return transactionRepositoryInstance;
+    }
+
+    public static synchronized void reset() {
+        if (connectionProviderInstance != null) {
+            connectionProviderInstance.shutdown();
+            connectionProviderInstance = null;
+        }
+        accountRepositoryInstance = null;
+        transactionRepositoryInstance = null;
     }
 }

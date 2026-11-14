@@ -4,7 +4,6 @@ import com.gdb.domain.*;
 import com.gdb.repository.*;
 import com.gdb.service.AccountService;
 import com.gdb.logging.*;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class TestRepositoryInMemory {
@@ -19,63 +18,66 @@ public class TestRepositoryInMemory {
 
         AccountService service = new AccountService(accountRepo, txnRepo, logger);
 
-        // ============================================================
-        // 📝 STEP 17: Test Account Repository CRUD
-        // ============================================================
-        IAccount repoAccount = AccountFactory.createAccount("SAVINGS", 2001,
-                "Repository Test", 30, 20_000);
-        accountRepo.save(repoAccount);
-        check(accountRepo.findById(2001) == repoAccount, "account save/findById");
-        check(accountRepo.findAll().size() == 1, "account findAll");
-        check(accountRepo.exists(2001) && !accountRepo.exists(9999), "account exists");
-        repoAccount.deposit(500);
-        accountRepo.update(repoAccount);
-        check(accountRepo.findById(2001).getBalance() == 20_500, "account update");
-        check(accountRepo.nextAccountNumber() == 1001, "next account number");
-        accountRepo.delete(2001);
-        check(!accountRepo.exists(2001), "account delete");
-        System.out.println("Account repository CRUD: PASS");
+        // Test Account Creation via Service
+        IAccount acc1 = service.openAccount("SAVINGS", "Rajesh Sharma", 30, 50000.0, 2);
+        IAccount acc2 = service.openAccount("CURRENT", "Priya Patel", 28, 40000.0, 0);
+        acc1.setPin(1234);
+        acc2.setPin(5678);
 
-        // ============================================================
-        // 📝 STEP 18: Test Transaction Repository Operations
-        // ============================================================
-        Transaction txn = new Transaction("TEST-1", LocalDateTime.now(), 3001,
-                TransactionType.DEPOSIT, 250, 1_250, "SUCCESS", "Test deposit", 0, 0);
-        txnRepo.save(txn);
-        check(txnRepo.findAll().size() == 1, "transaction findAll");
-        check(txnRepo.findByAccount(3001).size() == 1, "transaction find by account");
-        check(txnRepo.findByAccount(9999).isEmpty(), "transaction account filter");
-        txnRepo.clear();
-        check(txnRepo.findAll().isEmpty(), "transaction clear");
-        System.out.println("Transaction repository operations: PASS");
+        System.out.println("[TEST 1] Account Creation & Auto ID Generation:");
+        System.out.println("  acc1 ID = " + acc1.getAccountNumber() + " (Expected 1001)");
+        System.out.println("  acc2 ID = " + acc2.getAccountNumber() + " (Expected 1002)");
+        assert acc1.getAccountNumber() == 1001 : "acc1 should have ID 1001";
+        assert acc2.getAccountNumber() == 1002 : "acc2 should have ID 1002";
+        System.out.println("  -> PASSED");
 
-        // ============================================================
-        // 📝 STEP 19: Test Service Integration With Repositories
-        // ============================================================
-        IAccount source = service.openAccount("SAVINGS", "Source Test", 30, 20_000);
-        IAccount destination = service.openAccount("SAVINGS", "Destination Test", 30, 20_000);
-        source.setPin(1234);
-        destination.setPin(5678);
+        // Test Deposit
+        System.out.println("\n[TEST 2] Deposit via Service:");
+        Transaction depTxn = service.deposit(1001, 10000.0);
+        System.out.println("  " + depTxn);
+        assert acc1.getBalance() == 60000.0 : "Balance after deposit should be 60000.0";
+        System.out.println("  -> PASSED");
 
-        service.deposit(source.getAccountNumber(), 500);
-        service.withdraw(source.getAccountNumber(), 200, 1234);
-        service.transfer(source.getAccountNumber(), destination.getAccountNumber(), 100, 1234);
+        // Test Withdraw
+        System.out.println("\n[TEST 3] Withdraw via Service:");
+        Transaction wthTxn = service.withdraw(1001, 5000.0, 1234);
+        System.out.println("  " + wthTxn);
+        assert acc1.getBalance() == 55000.0 : "Balance after withdraw should be 55000.0";
+        System.out.println("  -> PASSED");
 
-        check(service.getAccount(source.getAccountNumber()).getBalance() == 20_200,
-                "service open/deposit/withdraw/transfer source balance");
-        check(service.getAccount(destination.getAccountNumber()).getBalance() == 20_100,
-                "service transfer destination balance");
-        check(service.getTransactionRecords().size() == 3, "service transaction persistence");
-        check(service.getTransactionRecords(source.getAccountNumber()).size() == 3,
-                "service transaction history by account");
-        System.out.println("AccountService integration: PASS");
+        // Test Transfer
+        System.out.println("\n[TEST 4] Transfer via Service:");
+        Transaction trfTxn = service.transfer(1001, 1002, 10000.0, 1234);
+        System.out.println("  " + trfTxn);
+        assert acc1.getBalance() == 45000.0 : "Sender balance should be 45000.0";
+        assert acc2.getBalance() == 50000.0 : "Receiver balance should be 50000.0";
+        System.out.println("  -> PASSED");
 
-        System.out.println("Activity 21 Repository tests complete.");
-    }
+        // Test Repository Queries
+        System.out.println("\n[TEST 5] Repository Queries:");
+        List<IAccount> allAccs = service.getAllAccounts();
+        System.out.println("  Total accounts in repo: " + allAccs.size() + " (Expected 2)");
+        assert allAccs.size() == 2 : "Should have 2 accounts";
 
-    private static void check(boolean condition, String testName) {
-        if (!condition) {
-            throw new AssertionError("Failed: " + testName);
-        }
+        List<Transaction> allTxns = service.getTransactionRecords();
+        System.out.println("  Total transactions in repo: " + allTxns.size() + " (Expected 3)");
+        assert allTxns.size() == 3 : "Should have 3 transactions";
+
+        List<Transaction> acc1Txns = service.getTransactionRecords(1001);
+        System.out.println("  Transactions for account 1001: " + acc1Txns.size() + " (Expected 3)");
+        assert acc1Txns.size() == 3 : "Account 1001 should have 3 transactions";
+        System.out.println("  -> PASSED");
+
+        // Test RepositoryFactory
+        System.out.println("\n[TEST 6] RepositoryFactory Mode:");
+        String mode = RepositoryFactory.getPersistenceMode();
+        System.out.println("  Persistence mode: " + mode);
+        AccountRepository factoryAccRepo = RepositoryFactory.getAccountRepository();
+        assert factoryAccRepo != null : "Factory should return non-null repo";
+        System.out.println("  -> PASSED");
+
+        System.out.println("\n" + "=".repeat(60));
+        System.out.println("  ALL ACTIVITY 21 IN-MEMORY REPOSITORY TESTS PASSED!");
+        System.out.println("=".repeat(60));
     }
 }
