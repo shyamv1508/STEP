@@ -53,8 +53,22 @@ public class RepositoryFactory {
     //      - default  -> return InMemoryAccountRepository
     // ============================================================
     public static synchronized AccountRepository getAccountRepository() {
-        // TODO: Step 15 - return appropriate AccountRepository
-        return null;
+        // TODO: Step 15 - return appropriate AccountRepository done
+        String mode = getPersistenceMode();
+
+        if ("jdbc".equalsIgnoreCase(mode)) {
+            throw new UnsupportedOperationException(
+                    "JDBC repository not implemented yet - coming in Activity 22");
+        }
+        if ("file".equalsIgnoreCase(mode)) {
+            throw new UnsupportedOperationException(
+                    "File repository not implemented yet");
+        }
+
+        if (accountRepositoryInstance == null) {
+            accountRepositoryInstance = new InMemoryAccountRepository();
+        }
+        return accountRepositoryInstance;
     }
 
     // ============================================================
@@ -68,7 +82,21 @@ public class RepositoryFactory {
     //      - default  -> return InMemoryTransactionRepository
     // ============================================================
     public static synchronized TransactionRepository getTransactionRepository() {
-        // TODO: Step 16 - return appropriate TransactionRepository
-        return null;
+        // TODO: Step 16 - return appropriate TransactionRepository done
+        String mode = getPersistenceMode();
+
+        if ("jdbc".equalsIgnoreCase(mode)) {
+            throw new UnsupportedOperationException(
+                    "JDBC repository not implemented yet - coming in Activity 22");
+        }
+        if ("file".equalsIgnoreCase(mode)) {
+            throw new UnsupportedOperationException(
+                    "File repository not implemented yet");
+        }
+
+        if (transactionRepositoryInstance == null) {
+            transactionRepositoryInstance = new InMemoryTransactionRepository();
+        }
+        return transactionRepositoryInstance;
     }
 }
