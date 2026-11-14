@@ -14,7 +14,7 @@ public class InMemoryTransactionRepository implements TransactionRepository {
     // INSTRUCTIONS:
     //   Declare a private final List<Transaction> transactions = new ArrayList<>()
     // ============================================================
-    // TODO: Step 9 - declare transactions list
+    // TODO: Step 9 - declare transactions list done
     private final List<Transaction> transactions = new ArrayList<>();
 
     // ============================================================
@@ -25,7 +25,10 @@ public class InMemoryTransactionRepository implements TransactionRepository {
     // ============================================================
     @Override
     public void save(Transaction transaction) {
-        // TODO: Step 10 - append transaction
+        // TODO: Step 10 - append transaction   done
+        if (transaction != null) {
+            transactions.add(transaction);
+        }
     }
 
     // ============================================================
@@ -36,8 +39,18 @@ public class InMemoryTransactionRepository implements TransactionRepository {
     // ============================================================
     @Override
     public List<Transaction> findByAccount(int accountNumber) {
-        // TODO: Step 11 - filter transactions by account number
-        return Collections.emptyList();
+        // TODO: Step 11 - filter transactions by account number    done
+        List<Transaction> result = new ArrayList<>();
+
+        for (Transaction transaction : transactions) {
+            if (transaction.getAccountNumber() == accountNumber
+                    || transaction.getFromAccount() == accountNumber
+                    || transaction.getToAccount() == accountNumber) {
+                result.add(transaction);
+            }
+        }
+
+        return result;
     }
 
     // ============================================================
@@ -48,8 +61,8 @@ public class InMemoryTransactionRepository implements TransactionRepository {
     // ============================================================
     @Override
     public List<Transaction> findAll() {
-        // TODO: Step 12 - return all transactions
-        return Collections.emptyList();
+        // TODO: Step 12 - return all transactions  done
+        return new ArrayList<>(transactions);
     }
 
     // ============================================================
@@ -60,6 +73,7 @@ public class InMemoryTransactionRepository implements TransactionRepository {
     // ============================================================
     @Override
     public void clear() {
-        // TODO: Step 13 - clear list
+        // TODO: Step 13 - clear list   done
+        transactions.clear();
     }
 }
