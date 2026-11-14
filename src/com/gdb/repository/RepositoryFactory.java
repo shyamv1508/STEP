@@ -10,6 +10,7 @@ public class RepositoryFactory {
 
     private static AccountRepository accountRepositoryInstance;
     private static TransactionRepository transactionRepositoryInstance;
+    private static final String CONFIG_RESOURCE = "/config/persistence.properties";
 
     // ============================================================
     // 📝 STEP 14: Read persistence.mode from Configuration
@@ -19,8 +20,26 @@ public class RepositoryFactory {
     //   2. Return property value for "persistence.mode" (default to "memory" if missing).
     // ============================================================
     public static String getPersistenceMode() {
-        // TODO: Step 14 - read persistence.mode from properties
-        return "memory";
+        // TODO: Step 14 - read persistence.mode from properties    done
+        Properties properties = new Properties();
+
+        try (InputStream input =
+                     RepositoryFactory.class.getResourceAsStream(CONFIG_RESOURCE)) {
+            if (input != null) {
+                properties.load(input);
+            } else {
+                // Fallback for running from a project directory.
+                try (InputStream fileInput =
+                             new FileInputStream("src/main/resources/config/persistence.properties")) {
+                    properties.load(fileInput);
+                }
+            }
+        } catch (IOException e) {
+            // Keep the default mode if the configuration cannot be read.
+        }
+
+        return properties.getProperty("persistence.mode", "memory").trim();
+
     }
 
     // ============================================================
