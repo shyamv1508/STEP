@@ -28,7 +28,10 @@ public class InMemoryAccountRepository implements AccountRepository {
     @Override
     public void save(IAccount account) {
 
-        // TODO: Step 2 - save account to map
+        // TODO: Step 2 - save account to map   done
+        if (account != null) {
+            accounts.put(account.getAccountNumber(), account);
+        }
 
     }
 
@@ -40,9 +43,9 @@ public class InMemoryAccountRepository implements AccountRepository {
     // ============================================================
     @Override
     public IAccount findById(int accountNumber) {
-        // TODO: Step 3 - retrieve account by ID
+        // TODO: Step 3 - retrieve account by ID done
 
-        return null;
+        return accounts.get(accountNumber);
     }
 
     // ============================================================
@@ -53,8 +56,8 @@ public class InMemoryAccountRepository implements AccountRepository {
     // ============================================================
     @Override
     public List<IAccount> findAll() {
-        // TODO: Step 4 - return all accounts as a List
-        return Collections.emptyList();
+        // TODO: Step 4 - return all accounts as a List done
+        return new ArrayList<>(accounts.values());
     }
 
     // ============================================================
@@ -65,7 +68,10 @@ public class InMemoryAccountRepository implements AccountRepository {
     // ============================================================
     @Override
     public void update(IAccount account) {
-        // TODO: Step 5 - update account in map
+        // TODO: Step 5 - update account in map done
+        if (account != null && accounts.containsKey(account.getAccountNumber())) {
+            accounts.put(account.getAccountNumber(), account);
+        }
     }
 
     // ============================================================
@@ -76,7 +82,8 @@ public class InMemoryAccountRepository implements AccountRepository {
     // ============================================================
     @Override
     public void delete(int accountNumber) {
-        // TODO: Step 6 - remove account from map
+        // TODO: Step 6 - remove account from map   done
+        accounts.remove(accountNumber);
     }
 
     // ============================================================
@@ -87,9 +94,9 @@ public class InMemoryAccountRepository implements AccountRepository {
     // ============================================================
     @Override
     public boolean exists(int accountNumber) {
-        // TODO: Step 7 - check if account exists
+        // TODO: Step 7 - check if account exists   done
 
-        return false;
+        return accounts.containsKey(accountNumber);
     }
 
     // ============================================================
